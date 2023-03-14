@@ -9,7 +9,7 @@
 #include <cassert>
 #include <stdexcept>
 
-namespace Zt {
+namespace Zt { 
 
     struct SimplePushConstantData {
         glm::vec2 offset;
