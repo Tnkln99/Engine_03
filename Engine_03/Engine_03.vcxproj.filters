@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{211ef109-b569-418b-8865-941d396f9a04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ZtEngine">
+      <UniqueIdentifier>{6d3ce2b7-3892-42e5-b710-f2c63c5628b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ZtEngine">
+      <UniqueIdentifier>{f2abc748-7815-42dd-844e-8b0514f1e54a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ZtDevice.cpp">
+      <Filter>Source Files\ZtEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="ZtModel.cpp">
+      <Filter>Source Files\ZtEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="ZtPipeline.cpp">
+      <Filter>Source Files\ZtEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="ZtSwapChain.cpp">
+      <Filter>Source Files\ZtEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="ZtWindow.cpp">
+      <Filter>Source Files\ZtEngine</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="App.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ZtDevice.h">
+      <Filter>Header Files\ZtEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ZtModel.h">
+      <Filter>Header Files\ZtEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ZtPipeline.h">
+      <Filter>Header Files\ZtEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ZtSwapChain.h">
+      <Filter>Header Files\ZtEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ZtWindow.h">
+      <Filter>Header Files\ZtEngine</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="default.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="default.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaderCompile.bat">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="default.frag.spv">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="default.vert.spv">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>
