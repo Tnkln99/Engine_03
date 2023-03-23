@@ -122,6 +122,11 @@ VkResult ZtSwapChain::submitCommandBuffers(
     return result;
 }
 
+bool ZtSwapChain::compareSwapFormats(const ZtSwapChain& swapChain) const
+{
+    return swapChain.swapChainDepthFormat == swapChainDepthFormat && swapChain.swapChainImageFormat == swapChainImageFormat;
+}
+
 void ZtSwapChain::init()
 {
     createSwapChain();
@@ -301,6 +306,7 @@ void ZtSwapChain::createFramebuffers() {
 
 void ZtSwapChain::createDepthResources() {
     VkFormat depthFormat = findDepthFormat();
+    swapChainDepthFormat = depthFormat;
     VkExtent2D swapChainExtent = getSwapChainExtent();
 
     depthImages.resize(imageCount());

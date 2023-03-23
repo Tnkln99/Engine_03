@@ -25,7 +25,12 @@ namespace Zt
 	VkCommandBuffer ZtRenderer::getCurrentCommandBuffer() const
 	{
 		assert(isFrameStarted && "can not get command buffer when frame is not in progress");
-		return commandBuffers[currentImageIndex];
+		return commandBuffers[currentFrameIndex];
+	}
+	int ZtRenderer::getFrameIndex() const
+	{
+		assert(isFrameStarted && "can not get frame index when frame is not in progress");
+		return currentFrameIndex;
 	}
 	VkCommandBuffer ZtRenderer::beginFrame()
 	{
@@ -72,6 +77,7 @@ namespace Zt
 		}
 
 		isFrameStarted = false;
+		currentFrameIndex = (currentFrameIndex + 1) % ZtSwapChain::MAX_FRAMES_IN_FLIGHT;
 	}
 	void ZtRenderer::beginSwapChainRenderPass(VkCommandBuffer commandBuffer)
 	{
@@ -117,7 +123,7 @@ namespace Zt
 	}
 	void ZtRenderer::createCommandBuffers()
 	{
-		commandBuffers.resize(ztSwapChain->imageCount());
+		commandBuffers.resize(ZtSwapChain::MAX_FRAMES_IN_FLIGHT);
 
 		VkCommandBufferAllocateInfo allocInfo{};
 		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -143,14 +149,14 @@ namespace Zt
 			ztSwapChain = std::make_unique<ZtSwapChain>(ztDevice, extent);
 		}
 		else {
-			ztSwapChain = std::make_unique<ZtSwapChain>(ztDevice, extent, std::move(ztSwapChain));
-			if (ztSwapChain->imageCount() != commandBuffers.size()) {
-				freeCommandBuffers();
-				createCommandBuffers();
+			std::shared_ptr<ZtSwapChain> oldSwapChain = std::move(ztSwapChain);
+			ztSwapChain = std::make_unique<ZtSwapChain>(ztDevice, extent, oldSwapChain);
+
+			if(!oldSwapChain->compareSwapFormats(*ztSwapChain.get()))
+			{
+				throw std::runtime_error("Swap chain image (or depth) format has been changed!");
 			}
 		}
-
-		// todo: come back to this to handle the pipeline.
 	}
 	void ZtRenderer::freeCommandBuffers()
 	{

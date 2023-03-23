@@ -23,6 +23,7 @@ namespace Zt {
 		[[nodiscard]] VkRenderPass getSwapChainRenderPass() const;
 		[[nodiscard]] bool isFrameInProgress() const;
 		[[nodiscard]] VkCommandBuffer getCurrentCommandBuffer() const;
+		[[nodiscard]] int getFrameIndex() const;
 
 		VkCommandBuffer beginFrame();
 		void endFrame();
@@ -40,6 +41,7 @@ namespace Zt {
 		std::vector<VkCommandBuffer> commandBuffers;
 
 		uint32_t currentImageIndex{ 0 };
+		int currentFrameIndex{ 0 };
 		bool isFrameStarted{ false };
 	};
 }
