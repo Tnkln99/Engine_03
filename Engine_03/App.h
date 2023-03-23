@@ -1,10 +1,9 @@
 #pragma once
 
 #include "ZtWindow.h"
-#include "ZtPipeline.h"
+#include "ZtGameObject.h"
 #include "ZtDevice.h"
-#include "ZtSwapChain.h"
-#include "ZtModel.h"
+#include "ZtRenderer.h"
 
 #include <memory>
 
@@ -24,23 +23,13 @@ namespace Zt
 
 		void run();
 	private:
-		void loadModels();
-		void createPipelineLayout();
-		void createPipeline();
-		void createCommandBuffers();
-		void freeCommandBuffers();
-		void drawFrame();
-		void recreateSwapChain();
-		void recordCommandBuffer(int imageIndex);
+		void loadGameObjects();
 
 		ZtWindow ztWindow{ WIDTH, HEIGHT, "Engine_03" };
 		ZtDevice ztDevice{ ztWindow };
-		std::unique_ptr<ZtSwapChain> ztSwapChain;
+		ZtRenderer ztRenderer{ ztWindow, ztDevice };
 
-		std::unique_ptr<ZtPipeline> ztPipeline;
-		VkPipelineLayout pipelineLayout;
-		std::vector<VkCommandBuffer> commandBuffers;
-		std::unique_ptr<ZtModel> ztModel;
+		std::vector<ZtGameObject> gameObjects;
 	};
 }
 

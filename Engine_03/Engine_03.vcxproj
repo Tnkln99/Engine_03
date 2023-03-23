@@ -169,17 +169,23 @@ pause</Command>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SimpleRenderSystem.cpp" />
     <ClCompile Include="ZtDevice.cpp" />
+    <ClCompile Include="ZtGameObject.cpp" />
     <ClCompile Include="ZtModel.cpp" />
     <ClCompile Include="ZtPipeline.cpp" />
+    <ClCompile Include="ZtRenderer.cpp" />
     <ClCompile Include="ZtSwapChain.cpp" />
     <ClCompile Include="ZtWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="SimpleRenderSystem.h" />
     <ClInclude Include="ZtDevice.h" />
+    <ClInclude Include="ZtGameObject.h" />
     <ClInclude Include="ZtModel.h" />
     <ClInclude Include="ZtPipeline.h" />
+    <ClInclude Include="ZtRenderer.h" />
     <ClInclude Include="ZtSwapChain.h" />
     <ClInclude Include="ZtWindow.h" />
   </ItemGroup>

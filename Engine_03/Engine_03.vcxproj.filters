@@ -16,12 +16,6 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{211ef109-b569-418b-8865-941d396f9a04}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ZtEngine">
-      <UniqueIdentifier>{6d3ce2b7-3892-42e5-b710-f2c63c5628b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ZtEngine">
-      <UniqueIdentifier>{f2abc748-7815-42dd-844e-8b0514f1e54a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -31,19 +25,28 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ZtDevice.cpp">
-      <Filter>Source Files\ZtEngine</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ZtModel.cpp">
-      <Filter>Source Files\ZtEngine</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ZtPipeline.cpp">
-      <Filter>Source Files\ZtEngine</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ZtSwapChain.cpp">
-      <Filter>Source Files\ZtEngine</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ZtWindow.cpp">
-      <Filter>Source Files\ZtEngine</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ZtGameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ZtRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleRenderSystem.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,19 +54,28 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ZtDevice.h">
-      <Filter>Header Files\ZtEngine</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ZtModel.h">
-      <Filter>Header Files\ZtEngine</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ZtPipeline.h">
-      <Filter>Header Files\ZtEngine</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ZtSwapChain.h">
-      <Filter>Header Files\ZtEngine</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ZtWindow.h">
-      <Filter>Header Files\ZtEngine</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ZtGameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ZtRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleRenderSystem.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
