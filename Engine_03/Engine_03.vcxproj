@@ -168,26 +168,30 @@ pause</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="KeyboardInputController.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SimpleRenderSystem.cpp" />
-    <ClCompile Include="ZtDevice.cpp" />
-    <ClCompile Include="ZtGameObject.cpp" />
-    <ClCompile Include="ZtModel.cpp" />
-    <ClCompile Include="ZtPipeline.cpp" />
-    <ClCompile Include="ZtRenderer.cpp" />
-    <ClCompile Include="ZtSwapChain.cpp" />
-    <ClCompile Include="ZtWindow.cpp" />
+    <ClCompile Include="Device.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Pipeline.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="SwapChain.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="KeyboardInputController.h" />
     <ClInclude Include="SimpleRenderSystem.h" />
-    <ClInclude Include="ZtDevice.h" />
-    <ClInclude Include="ZtGameObject.h" />
-    <ClInclude Include="ZtModel.h" />
-    <ClInclude Include="ZtPipeline.h" />
-    <ClInclude Include="ZtRenderer.h" />
-    <ClInclude Include="ZtSwapChain.h" />
-    <ClInclude Include="ZtWindow.h" />
+    <ClInclude Include="Device.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Pipeline.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="SwapChain.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="default.frag" />

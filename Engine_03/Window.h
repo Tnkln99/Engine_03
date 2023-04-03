@@ -7,26 +7,27 @@
 
 namespace Zt
 {
-	class ZtWindow
+	class Window
 	{
 	public:
-		ZtWindow(int w, int h, std::string name);
-		~ZtWindow();
+		Window(int w, int h, std::string name);
+		~Window();
 
-		ZtWindow(const ZtWindow&) = delete;
-		ZtWindow& operator=(const ZtWindow&) = delete;
+		Window(const Window&) = delete;
+		Window& operator=(const Window&) = delete;
 
 		bool shouldClose();
 		VkExtent2D getExtent();
 
 		bool wasWindowResized();
 		void resetWindowResizedFlag();
+		GLFWwindow* getGLFWwindow() const;
 
 		void createWindowSurface(VkInstance instance, VkSurfaceKHR* surface);
 	private:
 		static void frameBufferResizedCallBack(GLFWwindow* window, int width, int height);
 
-		void inintWindow();
+		void initWindow();
 
 		int width;
 		int height;

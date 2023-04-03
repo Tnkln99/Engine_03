@@ -1,6 +1,6 @@
-#include "ZtPipeline.h"
+#include "Pipeline.h"
 
-#include "ZtModel.h"
+#include "Model.h"
 
 #include <fstream>
 #include <stdexcept>
@@ -8,24 +8,24 @@
 
 namespace Zt 
 { 
-	ZtPipeline::ZtPipeline(ZtDevice& device, 
+	Pipeline::Pipeline(Device& device, 
 		const std::string& vertFilePath, 
 		const std::string& fragFilePath, 
-		const PipelineConfigInfo& configInfo) : ztDevice{device}
+		const PipelineConfigInfo& configInfo) : device{device}
 	{
 		createGraphicPipeline(vertFilePath, fragFilePath, configInfo);
 	}
-	ZtPipeline::~ZtPipeline()
+	Pipeline::~Pipeline()
 	{
-		vkDestroyShaderModule(ztDevice.device(), vertShaderModule, nullptr);
-		vkDestroyShaderModule(ztDevice.device(), fragShaderModule, nullptr);
-		vkDestroyPipeline(ztDevice.device(), graphicsPipeline, nullptr);
+		vkDestroyShaderModule(device.device(), vertShaderModule, nullptr);
+		vkDestroyShaderModule(device.device(), fragShaderModule, nullptr);
+		vkDestroyPipeline(device.device(), graphicsPipeline, nullptr);
 	}
-	void ZtPipeline::bind(VkCommandBuffer commandBuffer)
+	void Pipeline::bind(VkCommandBuffer commandBuffer)
 	{
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
 	}
-	void ZtPipeline::defaultPipelineConfig(PipelineConfigInfo& configInfo)
+	void Pipeline::defaultPipelineConfig(PipelineConfigInfo& configInfo)
 	{
 		configInfo.inputAssemblyInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		configInfo.inputAssemblyInfo.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
@@ -96,7 +96,7 @@ namespace Zt
 			static_cast<uint32_t>(configInfo.dynamicStateEnables.size());
 		configInfo.dynamicStateInfo.flags = 0;
 	}
-	std::vector<char> ZtPipeline::readFile(const std::string& filePath)
+	std::vector<char> Pipeline::readFile(const std::string& filePath)
 	{
 		std::ifstream file{ filePath, std::ios::ate | std::ios::binary };
 
@@ -113,7 +113,7 @@ namespace Zt
 		file.close();
 		return buffer;
 	}
-	void ZtPipeline::createGraphicPipeline(
+	void Pipeline::createGraphicPipeline(
 		const std::string& vertFilePath, 
 		const std::string& fragFilePath, 
 		const PipelineConfigInfo& configInfo)
@@ -147,8 +147,8 @@ namespace Zt
 		shaderStages[1].pNext = nullptr;
 		shaderStages[1].pSpecializationInfo = nullptr;
 
-		auto attributeDescriptions = ZtModel::Vertex::getAttributeDescriptions();
-		auto bindingDescriptions = ZtModel::Vertex::getBindingDescriptions();
+		auto attributeDescriptions = Model::Vertex::getAttributeDescriptions();
+		auto bindingDescriptions = Model::Vertex::getBindingDescriptions();
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
 		vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
@@ -177,7 +177,7 @@ namespace Zt
 		pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
 
 		if (vkCreateGraphicsPipelines(
-			ztDevice.device(),
+			device.device(),
 			VK_NULL_HANDLE,
 			1,
 			&pipelineInfo,
@@ -186,14 +186,14 @@ namespace Zt
 			throw std::runtime_error("failed to create graphics pipeline");
 		}
 	}
-	void ZtPipeline::createShaderModule(const std::vector<char>& code, VkShaderModule* shaderModule)
+	void Pipeline::createShaderModule(const std::vector<char>& code, VkShaderModule* shaderModule)
 	{
 		VkShaderModuleCreateInfo createInfo{};
 		createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO; 
 		createInfo.codeSize = code.size();
 		createInfo.pCode = reinterpret_cast<const uint32_t*>(code.data());
 
-		if (vkCreateShaderModule(ztDevice.device(), &createInfo, nullptr, shaderModule) != VK_SUCCESS) {
+		if (vkCreateShaderModule(device.device(), &createInfo, nullptr, shaderModule) != VK_SUCCESS) {
 			throw std::runtime_error("failed to create shader module");
 		}
 	}

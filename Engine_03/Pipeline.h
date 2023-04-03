@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ZtDevice.h"
+#include "Device.h"
 #include <string>
 #include <vector>
 #include <cassert>
@@ -25,23 +25,23 @@ namespace Zt
 		VkRenderPass renderPass = nullptr;
 		uint32_t subpass = 0;
 	};
-	class ZtPipeline
+	class Pipeline
 	{
 	public:
-		ZtPipeline() = default;
-		ZtPipeline(ZtDevice& device, 
+		Pipeline() = default;
+		Pipeline(Device& device, 
 			const std::string& vertFilePath, 
 			const std::string& fragFilePath, 
 			const PipelineConfigInfo& configInfo);
-		~ZtPipeline();
-		ZtPipeline(const ZtPipeline&) = delete;
-		ZtPipeline& operator=(const ZtPipeline&) = delete;
+		~Pipeline();
+		Pipeline(const Pipeline&) = delete;
+		Pipeline& operator=(const Pipeline&) = delete;
 
 		void bind(VkCommandBuffer commandBuffer);
 
 		static void defaultPipelineConfig(PipelineConfigInfo& configInfo); 
 	private:
-		ZtDevice& ztDevice;
+		Device& device;
 		VkPipeline graphicsPipeline;
 		VkShaderModule vertShaderModule;
 		VkShaderModule fragShaderModule; 

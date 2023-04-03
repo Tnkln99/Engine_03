@@ -1,4 +1,4 @@
-#include "ZtDevice.h"
+#include "Device.h"
 
 // std headers
 #include <cstring>
@@ -47,7 +47,7 @@ void DestroyDebugUtilsMessengerEXT(
 }
 
 // class member functions
-ZtDevice::ZtDevice(ZtWindow &window) : window{window} {
+Device::Device(Window &window) : window{window} {
   createInstance();
   setupDebugMessenger();
   createSurface();
@@ -56,7 +56,7 @@ ZtDevice::ZtDevice(ZtWindow &window) : window{window} {
   createCommandPool();
 }
 
-ZtDevice::~ZtDevice() {
+Device::~Device() {
   vkDestroyCommandPool(device_, commandPool, nullptr);
   vkDestroyDevice(device_, nullptr);
 
@@ -68,7 +68,7 @@ ZtDevice::~ZtDevice() {
   vkDestroyInstance(instance, nullptr);
 }
 
-void ZtDevice::createInstance() {
+void Device::createInstance() {
   if (enableValidationLayers && !checkValidationLayerSupport()) {
     throw std::runtime_error("validation layers requested, but not available!");
   }
@@ -108,7 +108,7 @@ void ZtDevice::createInstance() {
   hasGflwRequiredInstanceExtensions();
 }
 
-void ZtDevice::pickPhysicalDevice() {
+void Device::pickPhysicalDevice() {
   uint32_t deviceCount = 0;
   vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
   if (deviceCount == 0) {
@@ -147,7 +147,7 @@ void ZtDevice::pickPhysicalDevice() {
   std::cout << "physical device: " << properties.deviceName << std::endl;
 }
 
-void ZtDevice::createLogicalDevice() {
+void Device::createLogicalDevice() {
   QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
 
   std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
@@ -193,7 +193,7 @@ void ZtDevice::createLogicalDevice() {
   vkGetDeviceQueue(device_, indices.presentFamily, 0, &presentQueue_);
 }
 
-void ZtDevice::createCommandPool() {
+void Device::createCommandPool() {
   QueueFamilyIndices queueFamilyIndices = findPhysicalQueueFamilies();
 
   VkCommandPoolCreateInfo poolInfo = {};
@@ -207,9 +207,9 @@ void ZtDevice::createCommandPool() {
   }
 }
 
-void ZtDevice::createSurface() { window.createWindowSurface(instance, &surface_); } 
+void Device::createSurface() { window.createWindowSurface(instance, &surface_); } 
 
-bool ZtDevice::isDeviceSuitable(VkPhysicalDevice device) {
+bool Device::isDeviceSuitable(VkPhysicalDevice device) {
   QueueFamilyIndices indices = findQueueFamilies(device);
 
   bool extensionsSupported = checkDeviceExtensionSupport(device);
@@ -227,7 +227,7 @@ bool ZtDevice::isDeviceSuitable(VkPhysicalDevice device) {
          supportedFeatures.samplerAnisotropy;
 }
 
-void ZtDevice::populateDebugMessengerCreateInfo(
+void Device::populateDebugMessengerCreateInfo(
     VkDebugUtilsMessengerCreateInfoEXT &createInfo) {
   createInfo = {};
   createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
@@ -240,7 +240,7 @@ void ZtDevice::populateDebugMessengerCreateInfo(
   createInfo.pUserData = nullptr;  // Optional
 }
 
-void ZtDevice::setupDebugMessenger() {
+void Device::setupDebugMessenger() {
   if (!enableValidationLayers) return;
   VkDebugUtilsMessengerCreateInfoEXT createInfo;
   populateDebugMessengerCreateInfo(createInfo);
@@ -249,7 +249,7 @@ void ZtDevice::setupDebugMessenger() {
   }
 }
 
-bool ZtDevice::checkValidationLayerSupport() {
+bool Device::checkValidationLayerSupport() {
   uint32_t layerCount;
   vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
@@ -274,7 +274,7 @@ bool ZtDevice::checkValidationLayerSupport() {
   return true;
 }
 
-std::vector<const char *> ZtDevice::getRequiredExtensions() {
+std::vector<const char *> Device::getRequiredExtensions() {
   uint32_t glfwExtensionCount = 0;
   const char **glfwExtensions;
   glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
@@ -288,7 +288,7 @@ std::vector<const char *> ZtDevice::getRequiredExtensions() {
   return extensions;
 }
 
-void ZtDevice::hasGflwRequiredInstanceExtensions() {
+void Device::hasGflwRequiredInstanceExtensions() {
   uint32_t extensionCount = 0;
   vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
   std::vector<VkExtensionProperties> extensions(extensionCount);
@@ -311,7 +311,7 @@ void ZtDevice::hasGflwRequiredInstanceExtensions() {
   }
 }
 
-bool ZtDevice::checkDeviceExtensionSupport(VkPhysicalDevice device) {
+bool Device::checkDeviceExtensionSupport(VkPhysicalDevice device) {
   uint32_t extensionCount;
   vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
 
@@ -331,7 +331,7 @@ bool ZtDevice::checkDeviceExtensionSupport(VkPhysicalDevice device) {
   return requiredExtensions.empty();
 }
 
-QueueFamilyIndices ZtDevice::findQueueFamilies(VkPhysicalDevice device) {
+QueueFamilyIndices Device::findQueueFamilies(VkPhysicalDevice device) {
   QueueFamilyIndices indices;
 
   uint32_t queueFamilyCount = 0;
@@ -362,7 +362,7 @@ QueueFamilyIndices ZtDevice::findQueueFamilies(VkPhysicalDevice device) {
   return indices;
 }
 
-SwapChainSupportDetails ZtDevice::querySwapChainSupport(VkPhysicalDevice device) {
+SwapChainSupportDetails Device::querySwapChainSupport(VkPhysicalDevice device) {
   SwapChainSupportDetails details;
   vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface_, &details.capabilities);
 
@@ -388,7 +388,7 @@ SwapChainSupportDetails ZtDevice::querySwapChainSupport(VkPhysicalDevice device)
   return details;
 }
 
-VkFormat ZtDevice::findSupportedFormat(
+VkFormat Device::findSupportedFormat(
     const std::vector<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features) {
   for (VkFormat format : candidates) {
     VkFormatProperties props;
@@ -404,7 +404,7 @@ VkFormat ZtDevice::findSupportedFormat(
   throw std::runtime_error("failed to find supported format!");
 }
 
-uint32_t ZtDevice::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) {
+uint32_t Device::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) {
   VkPhysicalDeviceMemoryProperties memProperties;
   vkGetPhysicalDeviceMemoryProperties(physicalDevice, &memProperties);
   for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
@@ -417,7 +417,7 @@ uint32_t ZtDevice::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags pro
   throw std::runtime_error("failed to find suitable memory type!");
 }
 
-void ZtDevice::createBuffer(
+void Device::createBuffer(
     VkDeviceSize size,
     VkBufferUsageFlags usage,
     VkMemoryPropertyFlags properties,
@@ -448,7 +448,7 @@ void ZtDevice::createBuffer(
   vkBindBufferMemory(device_, buffer, bufferMemory, 0);
 }
 
-VkCommandBuffer ZtDevice::beginSingleTimeCommands() {
+VkCommandBuffer Device::beginSingleTimeCommands() {
   VkCommandBufferAllocateInfo allocInfo{};
   allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
   allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
@@ -466,7 +466,7 @@ VkCommandBuffer ZtDevice::beginSingleTimeCommands() {
   return commandBuffer;
 }
 
-void ZtDevice::endSingleTimeCommands(VkCommandBuffer commandBuffer) {
+void Device::endSingleTimeCommands(VkCommandBuffer commandBuffer) {
   vkEndCommandBuffer(commandBuffer);
 
   VkSubmitInfo submitInfo{};
@@ -480,7 +480,7 @@ void ZtDevice::endSingleTimeCommands(VkCommandBuffer commandBuffer) {
   vkFreeCommandBuffers(device_, commandPool, 1, &commandBuffer);
 }
 
-void ZtDevice::copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size) {
+void Device::copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size) {
   VkCommandBuffer commandBuffer = beginSingleTimeCommands();
 
   VkBufferCopy copyRegion{};
@@ -492,7 +492,7 @@ void ZtDevice::copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize s
   endSingleTimeCommands(commandBuffer);
 }
 
-void ZtDevice::copyBufferToImage(
+void Device::copyBufferToImage(
     VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, uint32_t layerCount) {
   VkCommandBuffer commandBuffer = beginSingleTimeCommands();
 
@@ -519,7 +519,7 @@ void ZtDevice::copyBufferToImage(
   endSingleTimeCommands(commandBuffer);
 }
 
-void ZtDevice::createImageWithInfo(
+void Device::createImageWithInfo(
     const VkImageCreateInfo &imageInfo,
     VkMemoryPropertyFlags properties,
     VkImage &image,

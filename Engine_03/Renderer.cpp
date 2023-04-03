@@ -1,42 +1,48 @@
-#include "ZtRenderer.h"
+#include "Renderer.h"
 #include <cassert>
 #include <stdexcept>
 #include <array>
 
 namespace Zt 
 {
-	ZtRenderer::ZtRenderer(ZtWindow& window, ZtDevice& device) : ztWindow{window}, ztDevice{device}
+	Renderer::Renderer(Window& window, Device& device) : window{window}, device{device}
 	{
 		recreateSwapChain();
 		createCommandBuffers();
 	}
-	ZtRenderer::~ZtRenderer()
+	Renderer::~Renderer()
 	{
 		freeCommandBuffers();
 	}
-	VkRenderPass ZtRenderer::getSwapChainRenderPass() const
+	VkRenderPass Renderer::getSwapChainRenderPass() const
 	{
-		return ztSwapChain->getRenderPass();
+		return swapChain->getRenderPass();
 	}
-	bool ZtRenderer::isFrameInProgress() const
+
+	float Renderer::getAspectRatio() const
+	{
+		return swapChain->extentAspectRatio();
+	}
+
+	bool Renderer::isFrameInProgress() const
 	{
 		return isFrameStarted;
 	}
-	VkCommandBuffer ZtRenderer::getCurrentCommandBuffer() const
+	VkCommandBuffer Renderer::getCurrentCommandBuffer() const
 	{
 		assert(isFrameStarted && "can not get command buffer when frame is not in progress");
 		return commandBuffers[currentFrameIndex];
 	}
-	int ZtRenderer::getFrameIndex() const
+	int Renderer::getFrameIndex() const
 	{
 		assert(isFrameStarted && "can not get frame index when frame is not in progress");
 		return currentFrameIndex;
 	}
-	VkCommandBuffer ZtRenderer::beginFrame()
+	VkCommandBuffer Renderer::beginFrame()
 	{
 		assert(!isFrameStarted && "Can't call begingFrame when already in progress!");
 
-		auto result = ztSwapChain->acquireNextImage(&currentImageIndex);
+		auto result = swapChain->acquireNextImage(&currentImageIndex);
 
 		if (result == VK_ERROR_OUT_OF_DATE_KHR) {
 			recreateSwapChain();
@@ -58,7 +64,7 @@ namespace Zt
 		}
 		return commandBuffer;
 	}
-	void ZtRenderer::endFrame()
+	void Renderer::endFrame()
 	{
 		assert(isFrameStarted && "Can't call the endFrame when frame is in progress!");
 		auto commandBuffer = getCurrentCommandBuffer();
@@ -66,10 +72,10 @@ namespace Zt
 			throw std::runtime_error("failed to record command buffer!");
 		}
 
-		auto result = ztSwapChain->submitCommandBuffers(&commandBuffer, &currentImageIndex);
+		auto result = swapChain->submitCommandBuffers(&commandBuffer, &currentImageIndex);
 		if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR ||
-			ztWindow.wasWindowResized()) {
-			ztWindow.resetWindowResizedFlag();
+			window.wasWindowResized()) {
+			window.resetWindowResizedFlag();
 			recreateSwapChain();
 		}
 		else if (result != VK_SUCCESS) {
@@ -77,9 +83,9 @@ namespace Zt
 		}
 
 		isFrameStarted = false;
-		currentFrameIndex = (currentFrameIndex + 1) % ZtSwapChain::MAX_FRAMES_IN_FLIGHT;
+		currentFrameIndex = (currentFrameIndex + 1) % SwapChain::MAX_FRAMES_IN_FLIGHT;
 	}
-	void ZtRenderer::beginSwapChainRenderPass(VkCommandBuffer commandBuffer)
+	void Renderer::beginSwapChainRenderPass(VkCommandBuffer commandBuffer)
 	{
 		assert(isFrameStarted && "Can't call beginSwapChainRenderPass if frame is not in progress");
 		assert(
@@ -88,11 +94,11 @@ namespace Zt
 
 		VkRenderPassBeginInfo renderPassInfo{};
 		renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-		renderPassInfo.renderPass = ztSwapChain->getRenderPass();
-		renderPassInfo.framebuffer = ztSwapChain->getFrameBuffer(currentImageIndex);
+		renderPassInfo.renderPass = swapChain->getRenderPass();
+		renderPassInfo.framebuffer = swapChain->getFrameBuffer(currentImageIndex);
 
 		renderPassInfo.renderArea.offset = { 0, 0 };
-		renderPassInfo.renderArea.extent = ztSwapChain->getSwapChainExtent();
+		renderPassInfo.renderArea.extent = swapChain->getSwapChainExtent();
 
 		std::array<VkClearValue, 2> clearValues{};
 		clearValues[0].color = { 0.01f, 0.01f, 0.01f, 1.0f };
@@ -105,15 +111,15 @@ namespace Zt
 		VkViewport viewport{};
 		viewport.x = 0.0f;
 		viewport.y = 0.0f;
-		viewport.width = static_cast<float>(ztSwapChain->getSwapChainExtent().width);
-		viewport.height = static_cast<float>(ztSwapChain->getSwapChainExtent().height);
+		viewport.width = static_cast<float>(swapChain->getSwapChainExtent().width);
+		viewport.height = static_cast<float>(swapChain->getSwapChainExtent().height);
 		viewport.minDepth = 0.0f;
 		viewport.maxDepth = 1.0f;
-		VkRect2D scissor{ {0, 0}, ztSwapChain->getSwapChainExtent() };
+		VkRect2D scissor{ {0, 0}, swapChain->getSwapChainExtent() };
 		vkCmdSetViewport(commandBuffer, 0, 1, &viewport);
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
 	}
-	void ZtRenderer::endSwapChainRenderPass(VkCommandBuffer commandBuffer)
+	void Renderer::endSwapChainRenderPass(VkCommandBuffer commandBuffer)
 	{
 		assert(isFrameStarted && "Can't call endSwapChainRenderPass if frame is not in progress");
 		assert(
@@ -121,48 +127,48 @@ namespace Zt
 			"Can't end render pass on command buffer from a different frame");
 		vkCmdEndRenderPass(commandBuffer);
 	}
-	void ZtRenderer::createCommandBuffers()
+	void Renderer::createCommandBuffers()
 	{
-		commandBuffers.resize(ZtSwapChain::MAX_FRAMES_IN_FLIGHT);
+		commandBuffers.resize(SwapChain::MAX_FRAMES_IN_FLIGHT);
 
 		VkCommandBufferAllocateInfo allocInfo{};
 		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		allocInfo.commandPool = ztDevice.getCommandPool();
+		allocInfo.commandPool = device.getCommandPool();
 		allocInfo.commandBufferCount = static_cast<uint32_t>(commandBuffers.size());
 
-		if (vkAllocateCommandBuffers(ztDevice.device(), &allocInfo, commandBuffers.data()) !=
+		if (vkAllocateCommandBuffers(device.device(), &allocInfo, commandBuffers.data()) !=
 			VK_SUCCESS) {
 			throw std::runtime_error("failed to allocate command buffers!");
 		}
 	}
-	void ZtRenderer::recreateSwapChain()
+	void Renderer::recreateSwapChain()
 	{
-		auto extent = ztWindow.getExtent();
+		auto extent = window.getExtent();
 		while (extent.width == 0 || extent.height == 0) {
-			extent = ztWindow.getExtent();
+			extent = window.getExtent();
 			glfwWaitEvents();
 		}
-		vkDeviceWaitIdle(ztDevice.device());
+		vkDeviceWaitIdle(device.device());
 
-		if (ztSwapChain == nullptr) {
-			ztSwapChain = std::make_unique<ZtSwapChain>(ztDevice, extent);
+		if (swapChain == nullptr) {
+			swapChain = std::make_unique<SwapChain>(device, extent);
 		}
 		else {
-			std::shared_ptr<ZtSwapChain> oldSwapChain = std::move(ztSwapChain);
-			ztSwapChain = std::make_unique<ZtSwapChain>(ztDevice, extent, oldSwapChain);
+			std::shared_ptr<SwapChain> oldSwapChain = std::move(swapChain);
+			swapChain = std::make_unique<SwapChain>(device, extent, oldSwapChain);
 
-			if(!oldSwapChain->compareSwapFormats(*ztSwapChain.get()))
+			if(!oldSwapChain->compareSwapFormats(*swapChain.get()))
 			{
 				throw std::runtime_error("Swap chain image (or depth) format has been changed!");
 			}
 		}
 	}
-	void ZtRenderer::freeCommandBuffers()
+	void Renderer::freeCommandBuffers()
 	{
 		vkFreeCommandBuffers(
-			ztDevice.device(),
-			ztDevice.getCommandPool(),
+			device.device(),
+			device.getCommandPool(),
 			static_cast<uint32_t>(commandBuffers.size()),
 			commandBuffers.data());
 		commandBuffers.clear();

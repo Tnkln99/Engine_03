@@ -1,8 +1,9 @@
 #pragma once
 
-#include "ZtDevice.h"
-#include "ZtGameObject.h"
-#include "ZtPipeline.h"
+#include "Camera.h"
+#include "Device.h"
+#include "GameObject.h"
+#include "Pipeline.h"
 
 // std
 #include <memory>
@@ -13,21 +14,22 @@ namespace Zt
 	class SimpleRenderSystem
 	{
 	public:
-		SimpleRenderSystem(ZtDevice& device, VkRenderPass renderPass);
+		SimpleRenderSystem(Device& device, VkRenderPass renderPass);
 		~SimpleRenderSystem();
 
 		SimpleRenderSystem(const SimpleRenderSystem&) = delete;
 		SimpleRenderSystem& operator=(const SimpleRenderSystem&) = delete;
 
-		void renderGameObjects(VkCommandBuffer commandBuffer, std::vector<ZtGameObject>& gameObjects);
+		void renderGameObjects(VkCommandBuffer commandBuffer,
+			std::vector<GameObject>& gameObjects, const Camera& camera);
 
 	private:
 		void createPipelineLayout();
 		void createPipeline(VkRenderPass renderPass);
 
-		ZtDevice& lveDevice;
+		Device& lveDevice;
 
-		std::unique_ptr<ZtPipeline> lvePipeline;
+		std::unique_ptr<Pipeline> lvePipeline;
 		VkPipelineLayout pipelineLayout;
 	};
 }

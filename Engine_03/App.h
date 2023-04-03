@@ -1,11 +1,9 @@
 #pragma once
 
-#include "ZtWindow.h"
-#include "ZtGameObject.h"
-#include "ZtDevice.h"
-#include "ZtRenderer.h"
-
-#include <memory>
+#include "Window.h"
+#include "GameObject.h"
+#include "Device.h"
+#include "Renderer.h"
 
 namespace Zt
 {
@@ -21,15 +19,15 @@ namespace Zt
 		App(const App&) = delete;
 		App& operator=(const App&) = delete;
 
-		void run();
+		void run(); 
 	private:
 		void loadGameObjects();
 
-		ZtWindow ztWindow{ WIDTH, HEIGHT, "Engine_03" };
-		ZtDevice ztDevice{ ztWindow };
-		ZtRenderer ztRenderer{ ztWindow, ztDevice };
+		Window window{ WIDTH, HEIGHT, "Engine_03" };
+		Device device{ window };
+		Renderer renderer{ window, device };
 
-		std::vector<ZtGameObject> gameObjects;
+		std::vector<GameObject> gameObjects;
 	};
 }
 

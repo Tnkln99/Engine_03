@@ -1,26 +1,26 @@
 #pragma once
 
-#include "ZtDevice.h"
-#include "ZtWindow.h"
-#include "ZtSwapChain.h"
+#include "Device.h"
+#include "Window.h"
+#include "SwapChain.h"
 
 #include <vector>
-#include <cassert>
 
 namespace Zt {
-	class ZtRenderer
+	class Renderer
 	{
 	public:
 		static constexpr int WIDTH = 800;
 		static constexpr int HEIGHT = 600;
 		
-		ZtRenderer(ZtWindow & window, ZtDevice& device);
-		~ZtRenderer();
+		Renderer(Window & window, Device& device);
+		~Renderer();
 
-		ZtRenderer(const ZtRenderer&) = delete;
-		ZtRenderer& operator=(const ZtRenderer&) = delete;
+		Renderer(const Renderer&) = delete;
+		Renderer& operator=(const Renderer&) = delete;
 
 		[[nodiscard]] VkRenderPass getSwapChainRenderPass() const;
+		[[nodiscard]] float getAspectRatio() const;
 		[[nodiscard]] bool isFrameInProgress() const;
 		[[nodiscard]] VkCommandBuffer getCurrentCommandBuffer() const;
 		[[nodiscard]] int getFrameIndex() const;
@@ -34,10 +34,10 @@ namespace Zt {
 		void recreateSwapChain();
 		void freeCommandBuffers();
 
-		ZtWindow& ztWindow;
-		ZtDevice& ztDevice;
+		Window& window;
+		Device& device;
 
-		std::unique_ptr<ZtSwapChain> ztSwapChain;
+		std::unique_ptr<SwapChain> swapChain;
 		std::vector<VkCommandBuffer> commandBuffers;
 
 		uint32_t currentImageIndex{ 0 };

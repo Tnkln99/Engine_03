@@ -1,46 +1,52 @@
-#include "ZtWindow.h"
+#include "Window.h"
 #include <stdexcept>
 
 namespace Zt {
-	ZtWindow::ZtWindow(int w, int h, std::string name) : width{w}, height{h}, windowName{name}
+	Window::Window(int w, int h, std::string name) : width{w}, height{h}, windowName{name}
 	{
-		inintWindow();
+		initWindow();
 	}
-	ZtWindow::~ZtWindow()
+	Window::~Window()
 	{
 		glfwDestroyWindow(window);
 		glfwTerminate();
 	}
-	bool ZtWindow::shouldClose()
+	bool Window::shouldClose()
 	{
 		return glfwWindowShouldClose(window);
 	}
-	VkExtent2D ZtWindow::getExtent()
+	VkExtent2D Window::getExtent()
 	{
 		return { static_cast<uint32_t>(width), static_cast<uint32_t>(height) };
 	}
-	bool ZtWindow::wasWindowResized()
+	bool Window::wasWindowResized()
 	{
 		return framebufferResized;
 	}
-	void ZtWindow::resetWindowResizedFlag()
+	void Window::resetWindowResizedFlag()
 	{
 		framebufferResized = false;
 	}
-	void ZtWindow::createWindowSurface(VkInstance instance, VkSurfaceKHR* surface)
+
+	GLFWwindow* Window::getGLFWwindow() const
+	{
+		return window;
+	}
+
+	void Window::createWindowSurface(VkInstance instance, VkSurfaceKHR* surface)
 	{
 		if (glfwCreateWindowSurface(instance, window, nullptr, surface) != VK_SUCCESS) {
 			throw std::runtime_error("failed to create window surface");
 		}
 	}
-	void ZtWindow::frameBufferResizedCallBack(GLFWwindow* window, int width, int height)
+	void Window::frameBufferResizedCallBack(GLFWwindow* window, int width, int height)
 	{
-		auto ztWindow = reinterpret_cast<ZtWindow*>(glfwGetWindowUserPointer(window));
+		auto ztWindow = reinterpret_cast<Window*>(glfwGetWindowUserPointer(window));
 		ztWindow->framebufferResized = true;
 		ztWindow->width = width;
 		ztWindow->height = height;
 	}
-	void ZtWindow::inintWindow()
+	void Window::initWindow()
 	{
 		glfwInit();
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Ztdevice.h"
+#include "Device.h"
 
 // vulkan headers
 #include <vulkan/vulkan.h>
@@ -12,16 +12,16 @@
 
 namespace Zt {
 
-class ZtSwapChain {
+class SwapChain {
  public:
   static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
-  ZtSwapChain(ZtDevice &deviceRef, VkExtent2D windowExtent);
-  ZtSwapChain(ZtDevice &deviceRef, VkExtent2D windowExtent, std::shared_ptr<ZtSwapChain> previous);
-  ~ZtSwapChain();
+  SwapChain(Device &deviceRef, VkExtent2D windowExtent);
+  SwapChain(Device &deviceRef, VkExtent2D windowExtent, std::shared_ptr<SwapChain> previous);
+  ~SwapChain();
 
-  ZtSwapChain(const ZtSwapChain &) = delete;
-  ZtSwapChain& operator=(const ZtSwapChain &) = delete;
+  SwapChain(const SwapChain &) = delete;
+  SwapChain& operator=(const SwapChain &) = delete;
 
   VkFramebuffer getFrameBuffer(int index) { return swapChainFramebuffers[index]; }
   VkRenderPass getRenderPass() { return renderPass; }
@@ -40,7 +40,7 @@ class ZtSwapChain {
   VkResult acquireNextImage(uint32_t *imageIndex);
   VkResult submitCommandBuffers(const VkCommandBuffer *buffers, uint32_t *imageIndex);
 
-  bool compareSwapFormats(const ZtSwapChain& swapChain) const;
+  bool compareSwapFormats(const SwapChain& swapChain) const;
  private:
   void init();
   void createSwapChain();
@@ -70,11 +70,11 @@ class ZtSwapChain {
   std::vector<VkImage> swapChainImages;
   std::vector<VkImageView> swapChainImageViews;
 
-  ZtDevice &device;
+  Device &device;
   VkExtent2D windowExtent;
 
   VkSwapchainKHR swapChain;
-  std::shared_ptr<ZtSwapChain> oldSwapChain;
+  std::shared_ptr<SwapChain> oldSwapChain;
 
   std::vector<VkSemaphore> imageAvailableSemaphores;
   std::vector<VkSemaphore> renderFinishedSemaphores;

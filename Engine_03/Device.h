@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ZtWindow.h"
+#include "Window.h"
 
 // std lib headers
 #include <string>
@@ -22,7 +22,7 @@ struct QueueFamilyIndices {
   bool isComplete() { return graphicsFamilyHasValue && presentFamilyHasValue; }
 };
 
-class ZtDevice {
+class Device {
  public:
 #ifdef NDEBUG
   const bool enableValidationLayers = false;
@@ -30,14 +30,14 @@ class ZtDevice {
   const bool enableValidationLayers = true;
 #endif
 
-  ZtDevice(ZtWindow &window);
-  ~ZtDevice();
+  Device(Window &window);
+  ~Device();
 
   // Not copyable or movable
-  ZtDevice(const ZtDevice &) = delete;
-  ZtDevice& operator=(const ZtDevice &) = delete;
-  ZtDevice(ZtDevice &&) = delete;
-  ZtDevice &operator=(ZtDevice &&) = delete;
+  Device(const Device &) = delete;
+  Device& operator=(const Device &) = delete;
+  Device(Device &&) = delete;
+  Device &operator=(Device &&) = delete;
 
   VkCommandPool getCommandPool() { return commandPool; }
   VkDevice device() { return device_; }
@@ -93,7 +93,7 @@ class ZtDevice {
   VkInstance instance;
   VkDebugUtilsMessengerEXT debugMessenger; 
   VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-  ZtWindow &window;
+  Window &window;
   VkCommandPool commandPool;
 
   VkDevice device_;
