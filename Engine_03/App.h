@@ -6,8 +6,8 @@
 #include "Renderer.h"
 
 namespace Zt
-{
-	class App
+{ 
+	class App 
 	{
 	public:
 		static constexpr int WIDTH = 800;
