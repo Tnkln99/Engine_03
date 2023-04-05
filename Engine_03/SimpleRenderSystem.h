@@ -4,6 +4,7 @@
 #include "Device.h"
 #include "GameObject.h"
 #include "Pipeline.h"
+#include "FrameInfo.h"
 
 // std
 #include <memory>
@@ -20,14 +21,14 @@ namespace Zt
 		SimpleRenderSystem(const SimpleRenderSystem&) = delete;
 		SimpleRenderSystem& operator=(const SimpleRenderSystem&) = delete;
 
-		void renderGameObjects(VkCommandBuffer commandBuffer,
-			std::vector<GameObject>& gameObjects, const Camera& camera);
+		void renderGameObjects(FrameInfo& frameInfo,
+			std::vector<GameObject>& gameObjects);
 
 	private:
 		void createPipelineLayout();
 		void createPipeline(VkRenderPass renderPass);
 
-		Device& lveDevice;
+		Device& device;
 
 		std::unique_ptr<Pipeline> lvePipeline;
 		VkPipelineLayout pipelineLayout;

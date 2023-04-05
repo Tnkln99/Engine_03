@@ -54,6 +54,9 @@
     <ClCompile Include="KeyboardInputController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Buffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h">
@@ -89,10 +92,13 @@
     <ClInclude Include="KeyboardInputController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utils.h">
+    <ClInclude Include="Buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -103,14 +109,14 @@
     <None Include="default.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="shaderCompile.bat">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="default.frag.spv">
       <Filter>Shaders</Filter>
     </None>
     <None Include="default.vert.spv">
       <Filter>Shaders</Filter>
+    </None>
+    <None Include="compile_shader_and_run.bat">
+      <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
 </Project>

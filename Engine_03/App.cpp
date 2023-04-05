@@ -2,6 +2,7 @@
 
 #include "Camera.h"
 #include "KeyboardInputController.h"
+#include "Buffer.h"
 
 // libs
 #define GLM_FORCE_RADIANS
@@ -13,6 +14,11 @@
 
 namespace Zt {
 
+    struct GlobalUbo {
+        glm::mat4 projectionView{ 1.f };
+        glm::vec3 lightDirection = glm::normalize(glm::vec3{ 1.f, -3.f, -1.f });
+    };
+
     App::App() {
         loadGameObjects();
     }
@@ -20,6 +26,19 @@ namespace Zt {
     App::~App() {}
 
     void App::run() {
+        std::vector<std::unique_ptr<Buffer>> uboBuffers(SwapChain::MAX_FRAMES_IN_FLIGHT);
+        for (auto& uboBuffer : uboBuffers)
+        {
+	        uboBuffer = std::make_unique<Buffer>(
+                device,
+                sizeof(GlobalUbo),
+                1,
+                VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+                VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT
+            );
+	        uboBuffer->map();
+        }
+
     	SimpleRenderSystem simpleRenderSystem{device, renderer.getSwapChainRenderPass()};
 
         Camera camera{};
@@ -45,8 +64,22 @@ namespace Zt {
 
         	if(auto commandBuffer = renderer.beginFrame())
             {
+                int frameIndex = renderer.getFrameIndex();
+                FrameInfo frameInfo{
+                    frameIndex,
+                    frameTime,
+                    commandBuffer,
+                    camera
+                };
+                // update
+                GlobalUbo ubo{};
+                ubo.projectionView = camera.getProjection() * camera.getView();
+                uboBuffers[frameIndex]->writeToBuffer(&ubo);
+                uboBuffers[frameIndex]->flush();
+
+        		// render 
                 renderer.beginSwapChainRenderPass(commandBuffer);
-                simpleRenderSystem.renderGameObjects(commandBuffer, gameObjects, camera);
+                simpleRenderSystem.renderGameObjects(frameInfo, gameObjects);
                 renderer.endSwapChainRenderPass(commandBuffer);
                 renderer.endFrame();
             }
@@ -56,12 +89,18 @@ namespace Zt {
     }
 
     void App::loadGameObjects() {
-        std::shared_ptr<Model> model = Model::createModelFromFile(device, "smooth_vase.obj");
+        std::shared_ptr<Model> model = Model::createModelFromFile(device, "flat_vase.obj");
+        auto flatVase = GameObject::createGameObject();
+        flatVase.model = model;
+        flatVase.transform.translation = { -.5f, .5f, 2.5f };
+        flatVase.transform.scale = { 3.f, 1.5f, 3.f };
+        gameObjects.push_back(std::move(flatVase));
 
-        auto engineObject = GameObject::createGameObject();
-        engineObject.model = model;
-        engineObject.transform.translation = { .0f, .0f, 2.5f };
-        engineObject.transform.scale = glm::vec3(3.f);
-        gameObjects.push_back(std::move(engineObject));
+        model = Model::createModelFromFile(device, "smooth_vase.obj");
+        auto smoothVase = GameObject::createGameObject();
+        smoothVase.model = model;
+        smoothVase.transform.translation = { .5f, .5f, 2.5f };
+        smoothVase.transform.scale = { 3.f, 1.5f, 3.f };
+        gameObjects.push_back(std::move(smoothVase));
     }
 }
