@@ -1,5 +1,5 @@
 #pragma once
-#include "Buffer.h"
+#include "GameObject.h"
 #include "Camera.h"
 
 namespace Zt
@@ -10,5 +10,7 @@ namespace Zt
 		float frameTime;
 		VkCommandBuffer commandBuffer;
 		Camera& camera;
+		VkDescriptorSet globalDescriptorSet;
+		GameObject::map& gameObjects;
 	};
 }

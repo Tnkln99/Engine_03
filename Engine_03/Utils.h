@@ -1,7 +1,6 @@
 #pragma once
 #include <functional>
 
-
 namespace Zt
 {
 	// from: https://stackoverflow.com/a/57595105

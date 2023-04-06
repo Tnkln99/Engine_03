@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Descriptors.h"
 #include "Window.h"
 #include "GameObject.h"
 #include "Device.h"
@@ -27,7 +28,8 @@ namespace Zt
 		Device device{ window };
 		Renderer renderer{ window, device };
 
-		std::vector<GameObject> gameObjects;
+		std::unique_ptr<DescriptorPool> globalPool{};
+		GameObject::map gameObjects;
 	};
 }
 

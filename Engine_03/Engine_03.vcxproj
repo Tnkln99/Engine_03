@@ -168,6 +168,7 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Buffer.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Descriptors.cpp" />
     <ClCompile Include="KeyboardInputController.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SimpleRenderSystem.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Descriptors.h" />
     <ClInclude Include="FrameInfo.h" />
     <ClInclude Include="KeyboardInputController.h" />
     <ClInclude Include="SimpleRenderSystem.h" />

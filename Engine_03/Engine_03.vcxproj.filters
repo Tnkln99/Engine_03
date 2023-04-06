@@ -57,6 +57,9 @@
     <ClCompile Include="Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Descriptors.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h">
@@ -101,6 +104,9 @@
     <ClInclude Include="FrameInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Descriptors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.frag">
@@ -116,7 +122,7 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="compile_shader_and_run.bat">
-      <Filter>Source Files</Filter>
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

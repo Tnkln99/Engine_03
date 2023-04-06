@@ -15,11 +15,18 @@
 namespace Zt {
 
     struct GlobalUbo {
-        glm::mat4 projectionView{ 1.f };
-        glm::vec3 lightDirection = glm::normalize(glm::vec3{ 1.f, -3.f, -1.f });
+        glm::mat4 projectionViewMatrix{ 1.f };
+        glm::vec4 ambientLightColor{ 1.0f, 1.0f, 1.0f, .02f };
+        glm::vec3 lightPosition{ -1.0f };
+        alignas(16) glm::vec4 lightColor{ 1.0f };
     };
 
     App::App() {
+        globalPool =
+            DescriptorPool::Builder(device)
+            .setMaxSets(SwapChain::MAX_FRAMES_IN_FLIGHT)
+            .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, SwapChain::MAX_FRAMES_IN_FLIGHT)
+            .build();
         loadGameObjects();
     }
 
@@ -38,13 +45,29 @@ namespace Zt {
             );
 	        uboBuffer->map();
         }
+        auto globalSetLayout =
+            DescriptorSetLayout::Builder(device)
+            .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
+            .build();
 
-    	SimpleRenderSystem simpleRenderSystem{device, renderer.getSwapChainRenderPass()};
+        std::vector<VkDescriptorSet> globalDescriptorSets(SwapChain::MAX_FRAMES_IN_FLIGHT);
+        for (int i = 0; i < globalDescriptorSets.size(); i++) {
+            auto bufferInfo = uboBuffers[i]->descriptorInfo();
+            DescriptorWriter(*globalSetLayout, *globalPool)
+                .writeBuffer(0, &bufferInfo)
+                .build(globalDescriptorSets[i]);
+        }
+
+    	SimpleRenderSystem simpleRenderSystem{device,
+    		renderer.getSwapChainRenderPass(),
+			globalSetLayout->getDescriptorSetLayout()
+    	};
 
         Camera camera{};
     	camera.setViewTarget(glm::vec3(-1, -2, 2), glm::vec3(0, 0, 2.5f));
 
         auto viewObject = GameObject::createGameObject();
+        viewObject.transform.translation.z = -2.5f;
         KeyboardInputController cameraController{};
 
         auto currentTime = std::chrono::high_resolution_clock::now();
@@ -60,7 +83,7 @@ namespace Zt {
             camera.setViewYXZ(viewObject.transform.translation, viewObject.transform.rotation);
 
             float aspect = renderer.getAspectRatio();
-            camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 10.f);
+            camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 100.f);
 
         	if(auto commandBuffer = renderer.beginFrame())
             {
@@ -69,17 +92,19 @@ namespace Zt {
                     frameIndex,
                     frameTime,
                     commandBuffer,
-                    camera
+                    camera,
+                    globalDescriptorSets[frameIndex],
+                	gameObjects
                 };
                 // update
                 GlobalUbo ubo{};
-                ubo.projectionView = camera.getProjection() * camera.getView();
+                ubo.projectionViewMatrix = camera.getProjection() * camera.getView();
                 uboBuffers[frameIndex]->writeToBuffer(&ubo);
                 uboBuffers[frameIndex]->flush();
 
         		// render 
                 renderer.beginSwapChainRenderPass(commandBuffer);
-                simpleRenderSystem.renderGameObjects(frameInfo, gameObjects);
+                simpleRenderSystem.renderGameObjects(frameInfo);
                 renderer.endSwapChainRenderPass(commandBuffer);
                 renderer.endFrame();
             }
@@ -92,15 +117,22 @@ namespace Zt {
         std::shared_ptr<Model> model = Model::createModelFromFile(device, "flat_vase.obj");
         auto flatVase = GameObject::createGameObject();
         flatVase.model = model;
-        flatVase.transform.translation = { -.5f, .5f, 2.5f };
+        flatVase.transform.translation = { -.5f, .5f, 0.0f };
         flatVase.transform.scale = { 3.f, 1.5f, 3.f };
-        gameObjects.push_back(std::move(flatVase));
+        gameObjects.emplace(flatVase.getId(), std::move(flatVase));
 
         model = Model::createModelFromFile(device, "smooth_vase.obj");
         auto smoothVase = GameObject::createGameObject();
         smoothVase.model = model;
-        smoothVase.transform.translation = { .5f, .5f, 2.5f };
+        smoothVase.transform.translation = { .5f, .5f, 0.0f };
         smoothVase.transform.scale = { 3.f, 1.5f, 3.f };
-        gameObjects.push_back(std::move(smoothVase));
+        gameObjects.emplace(smoothVase.getId(), std::move(smoothVase));
+
+        model = Model::createModelFromFile(device, "quad.obj");
+        auto floor = GameObject::createGameObject();
+        floor.model = model;
+        floor.transform.translation = { 0.0f, .5f, 0.0f };
+        floor.transform.scale = { 3.f, 1.f, 3.f };
+        gameObjects.emplace(floor.getId(), std::move(floor));
     }
 }
