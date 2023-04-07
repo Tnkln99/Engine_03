@@ -10,7 +10,7 @@
 #include <memory>
 #include <vector>
 
-namespace Zt
+namespace zt::graphics
 {
 	class SimpleRenderSystem
 	{
@@ -29,7 +29,7 @@ namespace Zt
 
 		Device& device;
 
-		std::unique_ptr<Pipeline> lvePipeline;
+		std::unique_ptr<Pipeline> pipeline;
 		VkPipelineLayout pipelineLayout;
 	};
 }

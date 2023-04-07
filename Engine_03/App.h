@@ -6,7 +6,7 @@
 #include "Device.h"
 #include "Renderer.h"
 
-namespace Zt
+namespace zt
 { 
 	class App 
 	{
@@ -24,12 +24,12 @@ namespace Zt
 	private:
 		void loadGameObjects();
 
-		Window window{ WIDTH, HEIGHT, "Engine_03" };
-		Device device{ window };
-		Renderer renderer{ window, device };
+		graphics::Window window{ WIDTH, HEIGHT, "Engine_03" };
+		graphics::Device device{ window };
+		graphics::Renderer renderer{ window, device };
 
-		std::unique_ptr<DescriptorPool> globalPool{};
-		GameObject::map gameObjects;
+		std::unique_ptr<graphics::DescriptorPool> globalPool{};
+		graphics::GameObject::map gameObjects;
 	};
 }
 

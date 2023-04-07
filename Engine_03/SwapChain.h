@@ -9,7 +9,7 @@
 #include <memory>
 #include <vector>
 
-namespace Zt {
+namespace zt::graphics {
 
 class SwapChain {
  public:
@@ -82,4 +82,4 @@ class SwapChain {
   size_t currentFrame = 0;
 };
 
-}  // namespace lve
+} 

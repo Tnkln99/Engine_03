@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Camera.h"
 
-namespace Zt
+namespace zt::graphics
 {
 	struct FrameInfo
 	{

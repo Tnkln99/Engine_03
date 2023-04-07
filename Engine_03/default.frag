@@ -5,7 +5,8 @@ layout (location = 1) in vec3 fragPosWorld;
 layout (location = 2) in vec3 fragNormalWorld;
 
 layout(set = 0, binding = 0) uniform GlobalUbo{
-	mat4 projectionViewMatrix;
+	mat4 projectionMatrix;
+	mat4 viewMatrix;
 	vec4 ambientLightColor; // w is intesity
 	vec3 lightPosition;
 	vec4 lightColor;

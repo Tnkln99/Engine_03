@@ -3,7 +3,7 @@
 #include <cassert>
 #include <limits>
 
-namespace Zt
+namespace zt::graphics
 {
 	void Camera::setOrthographicProjection(float left, float right, float top, float bottom, float near, float far)
 	{

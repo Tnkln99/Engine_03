@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-namespace Zt
+namespace zt::graphics
 {
     // Matrix corresponds to Translate * Ry * Rx * Rz * Scale
     // Rotations correspond to Tait-Bryan angles of Y(1), X(2), Z(3)

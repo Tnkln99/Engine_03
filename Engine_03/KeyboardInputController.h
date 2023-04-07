@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "Window.h"
 
-namespace Zt
+namespace zt::graphics
 {
 	class KeyboardInputController
 	{

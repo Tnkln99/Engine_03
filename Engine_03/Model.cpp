@@ -13,16 +13,16 @@
 namespace std
 {
 	template<>
-	struct hash<Zt::Model::Vertex> {
-		size_t operator()(Zt::Model::Vertex const& vertex) const {
+	struct hash<zt::graphics::Model::Vertex> {
+		size_t operator()(zt::graphics::Model::Vertex const& vertex) const {
 			size_t seed = 0;
-			Zt::hashCombine(seed, vertex.position, vertex.color, vertex.normal, vertex.uv);
+			zt::utilities::hashCombine(seed, vertex.position, vertex.color, vertex.normal, vertex.uv);
 			return seed;
 		}
 	};
 }
 
-namespace Zt {
+namespace zt::graphics {
 	void Model::Builder::loadModel(const std::string& filePath)
 	{
 		tinyobj::attrib_t attrib;

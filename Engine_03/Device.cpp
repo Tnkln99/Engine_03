@@ -6,7 +6,7 @@
 #include <set>
 #include <unordered_set>
 
-namespace Zt {
+namespace zt::graphics {
 
 // local callback functions
 static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
@@ -545,4 +545,4 @@ void Device::createImageWithInfo(
   }
 }
 
-}  // namespace lve
+} 

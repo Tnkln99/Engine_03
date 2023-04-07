@@ -10,7 +10,7 @@
 #include <vector>
 #include <memory>
 
-namespace Zt {
+namespace zt::graphics {
 	class Model
 	{
 	public:

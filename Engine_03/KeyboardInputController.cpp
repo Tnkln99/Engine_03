@@ -1,7 +1,7 @@
 #include "KeyboardInputController.h"
 #include "limits"
 
-namespace Zt
+namespace zt::graphics
 {
 	void KeyboardInputController::moveInPlaneXZ(GLFWwindow* window, float dt, GameObject& gameObject)
 	{

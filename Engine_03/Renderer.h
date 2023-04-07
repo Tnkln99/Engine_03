@@ -6,7 +6,7 @@
 
 #include <vector>
 
-namespace Zt {
+namespace zt::graphics {
 	class Renderer
 	{
 	public:

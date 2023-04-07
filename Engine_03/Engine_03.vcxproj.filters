@@ -16,6 +16,12 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{211ef109-b569-418b-8865-941d396f9a04}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Systems">
+      <UniqueIdentifier>{58a794ac-43d7-45a4-b3bf-c8179730d4c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Systems">
+      <UniqueIdentifier>{901bd255-cc90-47ba-93ad-bb5fcd5085a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -45,9 +51,6 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleRenderSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -59,6 +62,12 @@
     </ClCompile>
     <ClCompile Include="Descriptors.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleRenderSystem.cpp">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLightSystem.cpp">
+      <Filter>Source Files\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +95,6 @@
     <ClInclude Include="Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleRenderSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -107,6 +113,12 @@
     <ClInclude Include="Descriptors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SimpleRenderSystem.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLightSystem.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.frag">
@@ -122,6 +134,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="compile_shader_and_run.bat">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="pointLight.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="pointLight.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

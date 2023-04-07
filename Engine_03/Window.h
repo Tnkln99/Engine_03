@@ -5,7 +5,7 @@
 
 #include <string>;
 
-namespace Zt
+namespace zt::graphics
 {
 	class Window
 	{

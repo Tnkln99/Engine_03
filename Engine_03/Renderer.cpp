@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <array>
 
-namespace Zt 
+namespace zt::graphics
 {
 	Renderer::Renderer(Window& window, Device& device) : window{window}, device{device}
 	{

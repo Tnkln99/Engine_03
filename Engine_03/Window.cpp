@@ -1,7 +1,7 @@
 #include "Window.h"
 #include <stdexcept>
 
-namespace Zt {
+namespace zt::graphics {
 	Window::Window(int w, int h, std::string name) : width{w}, height{h}, windowName{name}
 	{
 		initWindow();
