@@ -1,8 +1,8 @@
 #include "App.h"
 
-#include "Camera.h"
-#include "KeyboardInputController.h"
-#include "Buffer.h"
+#include "graphics/Camera.h"
+#include "graphics/KeyboardInputController.h"
+#include "graphics/Buffer.h"
 
 // libs
 #define GLM_FORCE_RADIANS
@@ -10,8 +10,8 @@
 #include <glm/glm.hpp>
 #include <chrono>
 
-#include "SimpleRenderSystem.h"
-#include "PointLightSystem.h"
+#include "graphics/SimpleRenderSystem.h"
+#include "graphics/PointLightSystem.h"
 
 namespace zt {
 
@@ -123,21 +123,21 @@ namespace zt {
     }
 
     void App::loadGameObjects() {
-        std::shared_ptr<graphics::Model> model = graphics::Model::createModelFromFile(device, "flat_vase.obj");
+        std::shared_ptr<graphics::Model> model = graphics::Model::createModelFromFile(device, "models/flat_vase.obj");
         auto flatVase = graphics::GameObject::createGameObject();
         flatVase.model = model;
         flatVase.transform.translation = { -.5f, .5f, 0.0f };
         flatVase.transform.scale = { 3.f, 1.5f, 3.f };
         gameObjects.emplace(flatVase.getId(), std::move(flatVase));
 
-        model = graphics::Model::createModelFromFile(device, "smooth_vase.obj");
+        model = graphics::Model::createModelFromFile(device, "models/smooth_vase.obj");
         auto smoothVase = graphics::GameObject::createGameObject();
         smoothVase.model = model;
         smoothVase.transform.translation = { .5f, .5f, 0.0f };
         smoothVase.transform.scale = { 3.f, 1.5f, 3.f };
         gameObjects.emplace(smoothVase.getId(), std::move(smoothVase));
 
-        model = graphics::Model::createModelFromFile(device, "quad.obj");
+        model = graphics::Model::createModelFromFile(device, "models/quad.obj");
         auto floor = graphics::GameObject::createGameObject();
         floor.model = model;
         floor.transform.translation = { 0.0f, .5f, 0.0f };

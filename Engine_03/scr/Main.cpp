@@ -4,7 +4,7 @@
 #include <iostream>
 
 int main() {
-    zt::App app{}; 
+    zt::App app{};
 
     try {
         app.run();

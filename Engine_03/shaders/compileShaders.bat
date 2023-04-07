@@ -6,6 +6,4 @@ set mypath=%cd%
 %mypath%\libs\Vulkan\1.3.236.0\Bin\glslc.exe pointLight.vert -o pointLight.vert.spv
 %mypath%\libs\Vulkan\1.3.236.0\Bin\glslc.exe pointLight.frag -o pointLight.frag.spv
 
-Start %mypath%\..\x64\Debug\Engine_03.exe
-
 pause

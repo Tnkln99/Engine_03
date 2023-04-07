@@ -1,6 +1,6 @@
 #include "Model.h"
 
-#include "Utils.h"
+#include "../utilities/Utils.h"
 
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tiny_obj_loader.h>

@@ -165,48 +165,48 @@
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="App.cpp" />
-    <ClCompile Include="Buffer.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Descriptors.cpp" />
-    <ClCompile Include="KeyboardInputController.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="PointLightSystem.cpp" />
-    <ClCompile Include="SimpleRenderSystem.cpp" />
-    <ClCompile Include="Device.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Pipeline.cpp" />
-    <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="SwapChain.cpp" />
-    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="scr\App.cpp" />
+    <ClCompile Include="scr\graphics\Buffer.cpp" />
+    <ClCompile Include="scr\graphics\Camera.cpp" />
+    <ClCompile Include="scr\graphics\Descriptors.cpp" />
+    <ClCompile Include="scr\graphics\KeyboardInputController.cpp" />
+    <ClCompile Include="scr\Main.cpp" />
+    <ClCompile Include="scr\graphics\PointLightSystem.cpp" />
+    <ClCompile Include="scr\graphics\SimpleRenderSystem.cpp" />
+    <ClCompile Include="scr\graphics\Device.cpp" />
+    <ClCompile Include="scr\graphics\GameObject.cpp" />
+    <ClCompile Include="scr\graphics\Model.cpp" />
+    <ClCompile Include="scr\graphics\Pipeline.cpp" />
+    <ClCompile Include="scr\graphics\Renderer.cpp" />
+    <ClCompile Include="scr\graphics\SwapChain.cpp" />
+    <ClCompile Include="scr\graphics\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="App.h" />
-    <ClInclude Include="Buffer.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Descriptors.h" />
-    <ClInclude Include="FrameInfo.h" />
-    <ClInclude Include="KeyboardInputController.h" />
-    <ClInclude Include="PointLightSystem.h" />
-    <ClInclude Include="SimpleRenderSystem.h" />
-    <ClInclude Include="Device.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="Pipeline.h" />
-    <ClInclude Include="Renderer.h" />
-    <ClInclude Include="SwapChain.h" />
-    <ClInclude Include="Utils.h" />
-    <ClInclude Include="Window.h" />
+    <ClInclude Include="scr\App.h" />
+    <ClInclude Include="scr\graphics\Buffer.h" />
+    <ClInclude Include="scr\graphics\Camera.h" />
+    <ClInclude Include="scr\graphics\Descriptors.h" />
+    <ClInclude Include="scr\graphics\FrameInfo.h" />
+    <ClInclude Include="scr\graphics\KeyboardInputController.h" />
+    <ClInclude Include="scr\graphics\PointLightSystem.h" />
+    <ClInclude Include="scr\graphics\SimpleRenderSystem.h" />
+    <ClInclude Include="scr\graphics\Device.h" />
+    <ClInclude Include="scr\graphics\GameObject.h" />
+    <ClInclude Include="scr\graphics\Model.h" />
+    <ClInclude Include="scr\graphics\Pipeline.h" />
+    <ClInclude Include="scr\graphics\Renderer.h" />
+    <ClInclude Include="scr\graphics\SwapChain.h" />
+    <ClInclude Include="scr\utilities\Utils.h" />
+    <ClInclude Include="scr\graphics\Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="default.frag" />
-    <None Include="default.frag.spv" />
-    <None Include="default.vert" />
-    <None Include="default.vert.spv" />
-    <None Include="compile_shader_and_run.bat" />
-    <None Include="pointLight.frag" />
-    <None Include="pointLight.vert" />
+    <None Include="shaders\default.frag" />
+    <None Include="shaders\default.frag.spv" />
+    <None Include="shaders\default.vert" />
+    <None Include="shaders\default.vert.spv" />
+    <None Include="shaders\compileShaders.bat" />
+    <None Include="shaders\pointLight.frag" />
+    <None Include="shaders\pointLight.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

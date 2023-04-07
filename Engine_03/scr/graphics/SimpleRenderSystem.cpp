@@ -50,8 +50,8 @@ namespace zt::graphics
         pipelineConfig.pipelineLayout = pipelineLayout;
         pipeline = std::make_unique<Pipeline>(
             device,
-            "default.vert.spv",
-            "default.frag.spv",
+            "shaders/default.vert.spv",
+            "shaders/default.frag.spv",
             pipelineConfig);
     }
 

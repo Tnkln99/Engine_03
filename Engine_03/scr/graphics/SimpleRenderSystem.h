@@ -1,14 +1,11 @@
 #pragma once
 
-#include "Camera.h"
 #include "Device.h"
-#include "GameObject.h"
 #include "Pipeline.h"
 #include "FrameInfo.h"
 
 // std
 #include <memory>
-#include <vector>
 
 namespace zt::graphics
 {

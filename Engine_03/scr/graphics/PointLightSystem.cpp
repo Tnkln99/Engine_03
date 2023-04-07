@@ -53,8 +53,8 @@ namespace zt::graphics
         pipelineConfig.pipelineLayout = pipelineLayout;
         pipeline = std::make_unique<Pipeline>(
             device,
-            "pointLight.vert.spv",
-            "pointLight.frag.spv",
+            "shaders/pointLight.vert.spv",
+            "shaders/pointLight.frag.spv",
             pipelineConfig);
     }
 

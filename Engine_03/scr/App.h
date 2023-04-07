@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Descriptors.h"
-#include "Window.h"
-#include "GameObject.h"
-#include "Device.h"
-#include "Renderer.h"
+#include "graphics/Descriptors.h"
+#include "graphics/Window.h"
+#include "graphics/GameObject.h"
+#include "graphics/Device.h"
+#include "graphics/Renderer.h"
 
 namespace zt
 { 
