@@ -166,11 +166,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="scr\App.cpp" />
-    <ClCompile Include="scr\core\ComponentArray.cpp" />
-    <ClCompile Include="scr\core\ComponentManager.cpp" />
-    <ClCompile Include="scr\core\Coordinator.cpp" />
-    <ClCompile Include="scr\core\EntityManager.cpp" />
-    <ClCompile Include="scr\core\SystemManager.cpp" />
     <ClCompile Include="scr\graphics\Buffer.cpp" />
     <ClCompile Include="scr\graphics\Camera.cpp" />
     <ClCompile Include="scr\graphics\Descriptors.cpp" />
@@ -199,6 +194,9 @@
     <ClInclude Include="scr\core\SystemManager.h" />
     <ClInclude Include="scr\graphics\Buffer.h" />
     <ClInclude Include="scr\graphics\Camera.h" />
+    <ClInclude Include="scr\graphics\Components.h" />
+    <ClInclude Include="scr\graphics\components\Light.h" />
+    <ClInclude Include="scr\graphics\components\Model.h" />
     <ClInclude Include="scr\graphics\Descriptors.h" />
     <ClInclude Include="scr\graphics\FrameInfo.h" />
     <ClInclude Include="scr\graphics\KeyboardInputController.h" />
@@ -212,6 +210,7 @@
     <ClInclude Include="scr\graphics\SwapChain.h" />
     <ClInclude Include="scr\utilities\Utils.h" />
     <ClInclude Include="scr\graphics\Window.h" />
+    <ClInclude Include="scr\graphics\components\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\default.frag" />

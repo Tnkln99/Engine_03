@@ -1,4 +1,5 @@
 #pragma once
+#include <cassert>
 #include <memory>
 #include <unordered_map>
 
@@ -11,22 +12,66 @@ namespace zt::core
 	class ComponentManager
 	{
 	public:
-		template<typename T>
-		void registerComponent();
+		template <typename T>
+		void registerComponent()
+		{
+			const char* typeName = typeid(T).name();
 
-		template<typename T>
-		ComponentType getComponentType();
+			assert(componentTypes.find(typeName) == componentTypes.end() && "Registering component type more than once.");
 
-		template<typename T>
-		void addComponent(Entity entity, T component);
+			// Add this component type to the component type map
+			componentTypes.insert({ typeName, nextComponentType });
 
-		template<typename T>
-		void removeComponent(Entity entity);
+			// Create a ComponentArray pointer and add it to the component arrays map
+			componentArrays.insert({ typeName, std::make_shared<ComponentArray<T>>() });
 
-		template<typename T>
-		T& getComponent(Entity entity);
+			// Increment the value so that the next component registered will be different
+			++nextComponentType;
+		}
 
-		void entityDestroyed(Entity entity) const;
+		template <typename T>
+		ComponentType getComponentType()
+		{
+			const char* typeName = typeid(T).name();
+
+			assert(componentTypes.find(typeName) != componentTypes.end() && "Component not registered before use.");
+
+			// Return this component's type - used for creating signatures
+			return componentTypes[typeName];
+		}
+
+		template <typename T>
+		void addComponent(Entity entity, T component)
+		{
+			// Add a component to the array for an entity
+			getComponentArray<T>()->InsertData(entity, component);
+		}
+
+		template <typename T>
+		void removeComponent(Entity entity)
+		{
+			// Remove a component from the array for an entity
+			getComponentArray<T>()->RemoveData(entity);
+		}
+
+		template <typename T>
+		T& getComponent(Entity entity)
+		{
+			// Get a reference to a component from the array for an entity
+			return getComponentArray<T>()->GetData(entity);
+		}
+
+		void entityDestroyed(const Entity entity) const
+		{
+			// Notify each component array that an entity has been destroyed
+			// If it has a component for that entity, it will remove it
+			for (auto const& pair : componentArrays)
+			{
+				auto const& component = pair.second;
+
+				component->entityDestroyed(entity);
+			}
+		}
 
 	private:
 		// Map from type string pointer to a component type
@@ -39,7 +84,14 @@ namespace zt::core
 		ComponentType nextComponentType{};
 
 		// Convenience function to get the statically casted pointer to the ComponentArray of type T.
-		template<typename T>
-		std::shared_ptr<ComponentArray<T>> getComponentArray();
+		template <typename T>
+		std::shared_ptr<ComponentArray<T>> getComponentArray()
+		{
+			const char* typeName = typeid(T).name();
+
+			assert(componentTypes.find(typeName) != componentTypes.end() && "Component not registered before use.");
+
+			return std::static_pointer_cast<ComponentArray<T>>(componentArrays[typeName]);
+		}
 	};
 }
