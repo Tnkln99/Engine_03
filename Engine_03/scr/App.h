@@ -29,7 +29,7 @@ namespace zt
 		graphics::Renderer renderer{ window, device };
 
 		std::unique_ptr<graphics::DescriptorPool> globalPool{};
-		graphics::GameObject::map gameObjects;
+		graphics::GameObject::Map gameObjects;
 	};
 }
 

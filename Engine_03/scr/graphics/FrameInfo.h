@@ -11,6 +11,6 @@ namespace zt::graphics
 		VkCommandBuffer commandBuffer;
 		Camera& camera;
 		VkDescriptorSet globalDescriptorSet;
-		GameObject::map& gameObjects;
+		GameObject::Map& gameObjects;
 	};
 }
