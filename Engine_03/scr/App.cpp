@@ -9,6 +9,8 @@
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #include <glm/glm.hpp>
 #include <chrono>
+#include <iostream>
+#include <ostream>
 
 #include "graphics/SimpleRenderSystem.h"
 #include "graphics/PointLightSystem.h"
@@ -19,7 +21,7 @@ namespace zt {
         glm::mat4 projectionMatrix{ 1.f };
         glm::mat4 viewMatrix{ 1.f };
         glm::vec4 ambientLightColor{ 1.0f, 1.0f, 1.0f, .02f };
-        glm::vec3 lightPosition{ -1.0f };
+        glm::vec3 lightPosition{ -2.0f };
         alignas(16) glm::vec4 lightColor{ 1.0f, 1.0f, 1.0f, 1.0f };
     };
 
@@ -78,7 +80,8 @@ namespace zt {
         graphics::KeyboardInputController cameraController{};
 
         auto currentTime = std::chrono::high_resolution_clock::now();
-    	while (!window.shouldClose()) {
+    	while (!window.shouldClose()) 
+        {
             glfwPollEvents();
 
             auto newTime = std::chrono::high_resolution_clock::now();
@@ -103,19 +106,26 @@ namespace zt {
                     globalDescriptorSets[frameIndex],
                 	gameObjects
                 };
-                // update
-                GlobalUbo ubo{};
-                ubo.projectionMatrix = camera.getProjection();
-                ubo.viewMatrix = camera.getView();
-                uboBuffers[frameIndex]->writeToBuffer(&ubo);
-                uboBuffers[frameIndex]->flush();
 
         		// render 
                 renderer.beginSwapChainRenderPass(commandBuffer);
                 simpleRenderSystem.renderGameObjects(frameInfo);
                 pointLightSystem.render(frameInfo);
+                GlobalUbo ubo{};
+
+                ubo.lightColor = glm::vec4{ 1.0f,0.0f,1.0f,1.0f };
+                uboBuffers[frameIndex]->writeToBuffer(&ubo);
+                uboBuffers[frameIndex]->flush();
+
+                ubo.projectionMatrix = camera.getProjection();
+                ubo.viewMatrix = camera.getView();
+                uboBuffers[frameIndex]->writeToBuffer(&ubo);
+                uboBuffers[frameIndex]->flush();
+
+                
+
                 renderer.endSwapChainRenderPass(commandBuffer);
-                renderer.endFrame();
+                renderer.endFrame();        		
             }
         }
 
@@ -123,7 +133,7 @@ namespace zt {
     }
 
     void App::loadGameObjects() {
-        std::shared_ptr<graphics::Model> model = graphics::Model::createModelFromFile(device, "models/flat_vase.obj");
+        std::shared_ptr model = graphics::Model::createModelFromFile(device, "models/flat_vase.obj");
         auto flatVase = graphics::GameObject::createGameObject();
         flatVase.model = model;
         flatVase.transform.translation = { -.5f, .5f, 0.0f };

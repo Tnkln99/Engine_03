@@ -58,7 +58,7 @@ namespace zt::core
 		T& getComponent(Entity entity)
 		{
 			// Get a reference to a component from the array for an entity
-			return getComponentArray<T>()->GetData(entity);
+			return getComponentArray<T>()->getData(entity);
 		}
 
 		void entityDestroyed(const Entity entity) const
