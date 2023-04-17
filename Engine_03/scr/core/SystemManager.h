@@ -1,9 +1,9 @@
 #pragma once
+#include <cassert>
+#include <iostream>
 #include <memory>
 #include <unordered_map>
-#include <cassert>
 
-#include "Signature.h"
 #include "System.h"
 
 
@@ -21,7 +21,7 @@ namespace zt::core
 
 			// Create a pointer to the system and return it so it can be used externally
 			auto system = std::make_shared<T>();
-			systems.insert({ typeName, system });
+			systems.insert({ typeName, static_cast<std::shared_ptr<System>>(system) });
 			return system;
 
 		}
@@ -38,7 +38,7 @@ namespace zt::core
 
 		}
 
-		void entityDestroyed(const Entity entity) const
+		void entityDestroyed(const Entity entity)
 		{
 			// Erase a destroyed entity from all system lists
 			// mEntities is a set so no check needed
@@ -51,7 +51,7 @@ namespace zt::core
 
 		}
 
-		void entitySignatureChanged(const Entity entity, const Signature entitySignature)
+		void entitySignatureChanged(Entity entity, Signature entitySignature)
 		{
 			// Notify each system that an entity's signature changed
 			for (auto const& pair : systems)

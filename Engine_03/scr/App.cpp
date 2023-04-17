@@ -9,8 +9,6 @@
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #include <glm/glm.hpp>
 #include <chrono>
-#include <iostream>
-#include <ostream>
 
 #include "graphics/SimpleRenderSystem.h"
 #include "graphics/PointLightSystem.h"
@@ -21,7 +19,7 @@ namespace zt {
         glm::mat4 projectionMatrix{ 1.f };
         glm::mat4 viewMatrix{ 1.f };
         glm::vec4 ambientLightColor{ 1.0f, 1.0f, 1.0f, .02f };
-        glm::vec3 lightPosition{ -2.0f };
+        glm::vec3 lightPosition{ 0.0f,-2.0f,0.0f };
         alignas(16) glm::vec4 lightColor{ 1.0f, 1.0f, 1.0f, 1.0f };
     };
 
@@ -114,9 +112,6 @@ namespace zt {
                 GlobalUbo ubo{};
 
                 ubo.lightColor = glm::vec4{ 1.0f,0.0f,1.0f,1.0f };
-                uboBuffers[frameIndex]->writeToBuffer(&ubo);
-                uboBuffers[frameIndex]->flush();
-
                 ubo.projectionMatrix = camera.getProjection();
                 ubo.viewMatrix = camera.getView();
                 uboBuffers[frameIndex]->writeToBuffer(&ubo);

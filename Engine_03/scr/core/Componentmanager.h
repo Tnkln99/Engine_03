@@ -3,9 +3,7 @@
 #include <memory>
 #include <unordered_map>
 
-#include "Component.h"
 #include "ComponentArray.h"
-#include "Entity.h"
 
 namespace zt::core
 {
@@ -44,14 +42,14 @@ namespace zt::core
 		void addComponent(Entity entity, T component)
 		{
 			// Add a component to the array for an entity
-			getComponentArray<T>()->InsertData(entity, component);
+			getComponentArray<T>()->insertData(entity, component);
 		}
 
 		template <typename T>
 		void removeComponent(Entity entity)
 		{
 			// Remove a component from the array for an entity
-			getComponentArray<T>()->RemoveData(entity);
+			getComponentArray<T>()->removeData(entity);
 		}
 
 		template <typename T>
@@ -61,7 +59,7 @@ namespace zt::core
 			return getComponentArray<T>()->getData(entity);
 		}
 
-		void entityDestroyed(const Entity entity) const
+		void entityDestroyed(Entity entity)
 		{
 			// Notify each component array that an entity has been destroyed
 			// If it has a component for that entity, it will remove it

@@ -1,7 +1,7 @@
 #pragma once
 #include <set>
 
-#include "Entity.h"
+#include "Config.h"
 
 namespace zt::core
 {

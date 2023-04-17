@@ -1,19 +1,21 @@
 #pragma once
-#include "../graphics/Pipeline.h"
-#include "../core/System.h"
-#include "../core/Coordinator.h"
 #include "../graphics/FrameInfo.h"
+
+#include "../core/System.h"
+#include "../graphics/Pipeline.h"
+#include "../core/Coordinator.h"
+
 
 namespace zt::system
 {
-	class ModelRendererSystem : public core::System
+	class PointLightRenderSystem : public core::System
 	{
 	public:
 		void init(graphics::Device& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
 
-		void update(core::Coordinator& coordinator, const graphics::RenderUpdateInfo& renderUpdateInfo, const core::Entity& camera) const;
+		void update(core::Coordinator& coordinator, const graphics::RenderUpdateInfo& renderUpdateInfo) const;
 
-		void clean(graphics::Device& device);
+		void clean(graphics::Device& device) const;
 	private:
 		void createPipelineLayout(VkDescriptorSetLayout globalSetLayout, graphics::Device& device);
 		void createPipeline(VkRenderPass renderPass, graphics::Device& device);
@@ -22,5 +24,3 @@ namespace zt::system
 		VkPipelineLayout pipelineLayout{};
 	};
 }
-
-

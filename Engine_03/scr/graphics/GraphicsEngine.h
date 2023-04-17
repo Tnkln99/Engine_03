@@ -3,26 +3,15 @@
 #include "Renderer.h"
 #include "Buffer.h"
 
+#include "../core/Coordinator.h"
+
+
+#include "../systems/ModelRendererSystem.h"
+#include "../systems/PointLightRenderSystem.h"
+#include "../systems/CameraControllerSystem.h"
+
 namespace zt::graphics
 {
-	struct RenderInitInfo
-	{
-		Device& device;
-		VkRenderPass renderPass;
-		VkDescriptorSetLayout globalSetLayout;
-		std::vector<VkDescriptorSet> globalDescriptorSets;
-		std::vector<std::unique_ptr<Buffer>>& uboBuffers;
-	};
-
-	struct RenderUpdateInfo
-	{
-		int frameIndex;
-		float aspectRatio;
-		VkCommandBuffer commandBuffer;
-		VkDescriptorSet globalDescriptorSet;
-		std::vector<std::unique_ptr<Buffer>>& uboBuffers;
-	};
-
 	class GraphicsEngine
 	{
 	public:
@@ -35,14 +24,23 @@ namespace zt::graphics
 		GraphicsEngine(const GraphicsEngine&) = delete;
 		GraphicsEngine& operator=(const GraphicsEngine&) = delete;
 
-		RenderInitInfo init();
-		RenderUpdateInfo startRender(const RenderInitInfo &renderInitInfo);
-		void endRender(const RenderUpdateInfo& renderUpdateInfo);
+		void init(core::Coordinator& coordinator);
+		void render(core::Coordinator& coordinator);
+		void postRender();
+
+		bool shouldCloseWindow();
 	private:
 		Window window{ WIDTH, HEIGHT, "Engine_03" };
 		Device device{ window };
 		Renderer renderer{ window, device };
 
 		std::unique_ptr<DescriptorPool> globalPool{};
+		std::vector<VkDescriptorSet> globalDescriptorSets{ SwapChain::MAX_FRAMES_IN_FLIGHT };
+		std::vector<std::unique_ptr<Buffer>> uboBuffers{ SwapChain::MAX_FRAMES_IN_FLIGHT };
+
+		std::shared_ptr<system::ModelRendererSystem> modelSystem;
+		std::shared_ptr<system::PointLightRenderSystem> pointLightSystem;
+		std::shared_ptr<system::CameraControllerSystem> cameraControllerSystem;
+		core::Entity camera{};
 	};
 }

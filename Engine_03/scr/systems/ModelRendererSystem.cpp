@@ -17,14 +17,29 @@ namespace zt::system
 		glm::mat4 normalMatrix{ 1.f };
 	};
 
-	ModelRendererSystem::ModelRendererSystem(const graphics::RenderInitInfo& renderInitInfo) : device{renderInitInfo.device}
+	void ModelRendererSystem::init(graphics::Device& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout)
 	{
-		createPipelineLayout(renderInitInfo.globalSetLayout);
-		createPipeline(renderInitInfo.renderPass);
+		createPipelineLayout(globalSetLayout, device);
+		createPipeline(renderPass, device);
 	}
 
-	void ModelRendererSystem::update(core::Coordinator& coordinator, const graphics::RenderUpdateInfo& renderUpdateInfo, const core::Entity& cameraEntity) const
+	void ModelRendererSystem::update(core::Coordinator& coordinator, 
+		const graphics::RenderUpdateInfo& renderUpdateInfo, 
+		const core::Entity& cameraEntity) const
 	{
+		pipeline->bind(renderUpdateInfo.commandBuffer);
+
+		vkCmdBindDescriptorSets(
+			renderUpdateInfo.commandBuffer,
+			VK_PIPELINE_BIND_POINT_GRAPHICS,
+			pipelineLayout,
+			0,
+			1,
+			&renderUpdateInfo.globalDescriptorSet,
+			0,
+			nullptr
+		);
+
 		auto const& camera = coordinator.getComponent<component::Camera>(cameraEntity);
 
 		for(auto& modelEntity : entities)
@@ -47,14 +62,16 @@ namespace zt::system
 			model.model->draw(renderUpdateInfo.commandBuffer);
 		}
 
-		graphics::GlobalUbo ubo{};
-		ubo.projectionMatrix = camera.projection;
-		ubo.viewMatrix = camera.view;
-		renderUpdateInfo.uboBuffers[renderUpdateInfo.frameIndex]->writeToBuffer(&ubo);
-		renderUpdateInfo.uboBuffers[renderUpdateInfo.frameIndex]->flush();
+		renderUpdateInfo.ubo.projectionMatrix = camera.projection;
+		renderUpdateInfo.ubo.viewMatrix = camera.view;
 	}
 
-	void ModelRendererSystem::createPipelineLayout(VkDescriptorSetLayout globalSetLayout)
+	void ModelRendererSystem::clean(graphics::Device& device)
+	{
+		vkDestroyPipelineLayout(device.device(), pipelineLayout, nullptr);
+	}
+
+	void ModelRendererSystem::createPipelineLayout(VkDescriptorSetLayout globalSetLayout, graphics::Device& device)
 	{
 		VkPushConstantRange pushConstantRange{};
 		pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
@@ -75,7 +92,7 @@ namespace zt::system
 		}
 	}
 
-	void ModelRendererSystem::createPipeline(VkRenderPass renderPass)
+	void ModelRendererSystem::createPipeline(VkRenderPass renderPass, graphics::Device& device)
 	{
 		assert(pipelineLayout != nullptr && "Cannot create pipeline before pipeline layout");
 

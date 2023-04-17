@@ -58,7 +58,7 @@ namespace zt::graphics
             pipelineConfig);
     }
 
-    void PointLightSystem::render(FrameInfo& frameInfo) {
+    void PointLightSystem::render(const FrameInfo& frameInfo) {
         pipeline->bind(frameInfo.commandBuffer);
 
         vkCmdBindDescriptorSets(

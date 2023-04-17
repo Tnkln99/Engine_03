@@ -1,10 +1,10 @@
-#include "App.h"
+#include "Engine.h"
 
 #include <cstdlib>
 #include <iostream>
 
 int main() {
-    zt::App app{};
+    zt::Engine app{};
 
     try {
         app.run();

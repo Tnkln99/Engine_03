@@ -3,7 +3,7 @@
 #include <cassert>
 #include <unordered_map>
 
-#include "Entity.h"
+#include "Config.h"
 
 namespace zt::core
 {
@@ -18,7 +18,7 @@ namespace zt::core
 	class ComponentArray : public IComponentArray
 	{
 	public:
-		void insertData(const Entity entity, T component)
+		void insertData(Entity entity, T component)
 		{
 			assert(entityToIndexMap.find(entity) == entityToIndexMap.end() && "Component added to same entity more than once.");
 
@@ -31,7 +31,7 @@ namespace zt::core
 
 		}
 
-		void removeData(const Entity entity)
+		void removeData(Entity entity)
 		{
 			assert(entityToIndexMap.find(entity) != entityToIndexMap.end() && "Removing non-existent component.");
 
@@ -51,7 +51,7 @@ namespace zt::core
 			--size;
 		}
 
-		T& getData(const Entity entity)
+		T& getData(Entity entity)
 		{
 			assert(entityToIndexMap.find(entity) != entityToIndexMap.end() && "Retrieving non-existent component.");
 
@@ -60,7 +60,7 @@ namespace zt::core
 
 		}
 
-		void entityDestroyed(const Entity entity) override
+		void entityDestroyed(Entity entity) override
 		{
 			if (entityToIndexMap.find(entity) != entityToIndexMap.end())
 			{

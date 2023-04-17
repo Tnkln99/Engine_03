@@ -8,7 +8,7 @@ namespace zt::component
 {
     struct Transform
     {
-        glm::vec3 translation{};  // (position offset)
+	    glm::vec3 translation{};  // (position offset)
         glm::vec3 scale{ 1.f, 1.f, 1.f };
         glm::vec3 rotation{};
 

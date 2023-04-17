@@ -55,7 +55,7 @@ namespace zt::graphics
             pipelineConfig);
     }
 
-    void SimpleRenderSystem::renderGameObjects(FrameInfo& frameInfo) {
+    void SimpleRenderSystem::renderGameObjects(const FrameInfo& frameInfo) {
         pipeline->bind(frameInfo.commandBuffer);
 
         vkCmdBindDescriptorSets(

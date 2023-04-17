@@ -4,8 +4,7 @@
 
 #include <cassert>
 
-#include "Entity.h"
-#include "Signature.h"
+#include "Config.h"
 
 namespace zt::core
 {
@@ -33,7 +32,7 @@ namespace zt::core
 			return id;
 		}
 
-		void destroyEntity(const Entity entity)
+		void destroyEntity(Entity entity)
 		{
 			assert(entity < MAX_ENTITIES && "Entity out of range.");
 
@@ -46,7 +45,7 @@ namespace zt::core
 
 		}
 
-		void setSignature(const Entity entity, const Signature signature)
+		void setSignature(Entity entity, Signature signature)
 		{
 			assert(entity < MAX_ENTITIES && "Entity out of range.");
 
@@ -54,7 +53,7 @@ namespace zt::core
 			signatures[entity] = signature;
 		}
 
-		[[nodiscard]] Signature getSignature(const Entity entity) const
+		[[nodiscard]] Signature getSignature(Entity entity)
 		{
 			assert(entity < MAX_ENTITIES && "Entity out of range.");
 

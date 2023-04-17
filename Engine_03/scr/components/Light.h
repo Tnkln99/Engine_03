@@ -8,6 +8,8 @@ namespace zt::component
 {
 	struct Light
 	{
-		glm::vec3 color{ 1.0f };
+		glm::vec4 color{ 1.0f };
+
+		bool showSource = true;
 	};
 }

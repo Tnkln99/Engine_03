@@ -166,6 +166,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="scr\App.cpp" />
+    <ClCompile Include="scr\Engine.cpp" />
     <ClCompile Include="scr\graphics\Buffer.cpp" />
     <ClCompile Include="scr\graphics\Camera.cpp" />
     <ClCompile Include="scr\graphics\Descriptors.cpp" />
@@ -181,20 +182,21 @@
     <ClCompile Include="scr\graphics\Renderer.cpp" />
     <ClCompile Include="scr\graphics\SwapChain.cpp" />
     <ClCompile Include="scr\graphics\Window.cpp" />
+    <ClCompile Include="scr\systems\CameraControllerSystem.cpp" />
     <ClCompile Include="scr\systems\ModelRendererSystem.cpp" />
+    <ClCompile Include="scr\systems\PointLightRenderSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scr\App.h" />
     <ClInclude Include="scr\components\Camera.h" />
-    <ClInclude Include="scr\core\Component.h" />
     <ClInclude Include="scr\core\ComponentArray.h" />
     <ClInclude Include="scr\core\Componentmanager.h" />
+    <ClInclude Include="scr\core\Config.h" />
     <ClInclude Include="scr\core\Coordinator.h" />
-    <ClInclude Include="scr\core\Entity.h" />
     <ClInclude Include="scr\core\EntityManager.h" />
-    <ClInclude Include="scr\core\Signature.h" />
     <ClInclude Include="scr\core\System.h" />
     <ClInclude Include="scr\core\SystemManager.h" />
+    <ClInclude Include="scr\Engine.h" />
     <ClInclude Include="scr\graphics\Buffer.h" />
     <ClInclude Include="scr\graphics\Camera.h" />
     <ClInclude Include="scr\graphics\Components.h" />
@@ -212,7 +214,9 @@
     <ClInclude Include="scr\graphics\Pipeline.h" />
     <ClInclude Include="scr\graphics\Renderer.h" />
     <ClInclude Include="scr\graphics\SwapChain.h" />
+    <ClInclude Include="scr\systems\CameraControllerSystem.h" />
     <ClInclude Include="scr\systems\ModelRendererSystem.h" />
+    <ClInclude Include="scr\systems\PointLightRenderSystem.h" />
     <ClInclude Include="scr\utilities\Utils.h" />
     <ClInclude Include="scr\graphics\Window.h" />
     <ClInclude Include="scr\components\Transform.h" />

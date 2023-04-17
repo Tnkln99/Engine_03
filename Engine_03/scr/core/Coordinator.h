@@ -2,9 +2,7 @@
 #include <memory>
 
 #include "ComponentManager.h"
-#include "Entity.h"
 #include "EntityManager.h"
-#include "Signature.h"
 #include "SystemManager.h"
 
 namespace zt::core
@@ -20,12 +18,12 @@ namespace zt::core
 			systemManager = std::make_unique<SystemManager>();
 		}
 
-		[[nodiscard]] Entity createEntity() const
+		[[nodiscard]] Entity createEntity()
 		{
 			return entityManager->createEntity();
 		}
 
-		void destroyEntity(const Entity entity) const
+		void destroyEntity(const Entity entity)
 		{
 			entityManager->destroyEntity(entity);
 
@@ -36,7 +34,7 @@ namespace zt::core
 
 		// Component methods
 		template<typename T>
-		void registerComponent() const
+		void registerComponent()
 		{
 			componentManager->registerComponent<T>();
 		}
@@ -55,7 +53,7 @@ namespace zt::core
 
 
 		template<typename T>
-		void removeComponent(Entity entity) const
+		void removeComponent(Entity entity)
 		{
 			componentManager->removeComponent<T>(entity);
 
@@ -74,7 +72,7 @@ namespace zt::core
 		}
 
 		template <typename T>
-		[[nodiscard]] ComponentType getComponentType() const
+		[[nodiscard]] ComponentType getComponentType()
 		{
 			return componentManager->getComponentType<T>();
 		}
@@ -86,7 +84,7 @@ namespace zt::core
 		}
 
 		template <typename T>
-		void setSystemSignature(const Signature signature) const
+		void setSystemSignature(Signature signature)
 		{
 			systemManager->setSignature<T>(signature);
 		}
