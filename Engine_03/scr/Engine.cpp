@@ -1,12 +1,6 @@
 #include "Engine.h"
-
-#include "components/Camera.h"
 #include "core/Coordinator.h"
 #include "utilities/Timer.h"
-
-#include "components/Transform.h"
-#include "components/Model.h"
-#include "components/Light.h"
 
 namespace zt
 {
@@ -14,7 +8,7 @@ namespace zt
 
 	Engine::~Engine() = default;
 
-	void Engine::init(core::Coordinator& coordinator)
+	void Engine::init(core::Coordinator& coordinator) 
 	{
         coordinator.init();
         graphicEngine.init(coordinator);
