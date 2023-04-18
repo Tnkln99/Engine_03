@@ -9,8 +9,10 @@ namespace zt
 		Engine();
 		~Engine();
 
-		void run();
-	private:
+		void init(core::Coordinator& coordinator);
+
+		void run(core::Coordinator& coordinator);
+
 		graphics::GraphicsEngine graphicEngine{};
 	};
 }

@@ -13,7 +13,7 @@ namespace zt::system
 	public:
 		void init(graphics::Device& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
 
-		void update(core::Coordinator& coordinator, const graphics::RenderUpdateInfo& renderUpdateInfo) const;
+		void update(core::Coordinator& coordinator, const graphics::FrameInfo& renderUpdateInfo) const;
 
 		void clean(graphics::Device& device) const;
 	private:

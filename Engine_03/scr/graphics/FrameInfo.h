@@ -1,6 +1,12 @@
 #pragma once
-#include "GameObject.h"
-#include "Camera.h"
+
+
+// vulkan headers
+#include <vulkan/vulkan.h>
+
+#define GLM_FORCE_RADIANS
+#define GLM_FORCE_DEPTH_ZERO_TO_ONE
+#include <glm/glm.hpp>
 
 namespace zt::graphics
 {
@@ -12,22 +18,12 @@ namespace zt::graphics
 		alignas(16) glm::vec4 lightColor{ 1.0f, 1.0f, 1.0f, 1.0f };
 	};
 
-	struct RenderUpdateInfo
+	struct FrameInfo
 	{
 		int frameIndex;
 		float aspectRatio;
 		VkCommandBuffer commandBuffer;
 		VkDescriptorSet globalDescriptorSet;
 		GlobalUbo& ubo;
-	};
-
-	struct FrameInfo
-	{
-		int frameIndex;
-		float frameTime;
-		VkCommandBuffer commandBuffer;
-		Camera& camera;
-		VkDescriptorSet globalDescriptorSet;
-		GameObject::Map& gameObjects;
 	};
 }

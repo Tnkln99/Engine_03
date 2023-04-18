@@ -27,9 +27,6 @@
     <ClCompile Include="scr\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="scr\App.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="scr\graphics\Device.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -45,16 +42,7 @@
     <ClCompile Include="scr\graphics\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="scr\graphics\GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="scr\graphics\Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\graphics\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\graphics\KeyboardInputController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="scr\graphics\Buffer.cpp">
@@ -62,12 +50,6 @@
     </ClCompile>
     <ClCompile Include="scr\graphics\Descriptors.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\graphics\SimpleRenderSystem.cpp">
-      <Filter>Source Files\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\graphics\PointLightSystem.cpp">
-      <Filter>Source Files\Systems</Filter>
     </ClCompile>
     <ClCompile Include="scr\graphics\GraphicsEngine.cpp">
       <Filter>Source Files</Filter>
@@ -86,9 +68,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="scr\App.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="scr\graphics\Device.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -104,16 +83,7 @@
     <ClInclude Include="scr\graphics\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="scr\graphics\GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="scr\graphics\Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\graphics\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\graphics\KeyboardInputController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="scr\utilities\Utils.h">
@@ -127,12 +97,6 @@
     </ClInclude>
     <ClInclude Include="scr\graphics\Descriptors.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\graphics\SimpleRenderSystem.h">
-      <Filter>Header Files\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\graphics\PointLightSystem.h">
-      <Filter>Header Files\Systems</Filter>
     </ClInclude>
     <ClInclude Include="scr\core\EntityManager.h">
       <Filter>Header Files</Filter>
@@ -150,9 +114,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="scr\core\Coordinator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\graphics\Components.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="scr\components\Light.h">
@@ -183,6 +144,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="scr\core\Config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\utilities\Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\utilities\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

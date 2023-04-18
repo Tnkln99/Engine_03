@@ -165,18 +165,12 @@
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="scr\App.cpp" />
     <ClCompile Include="scr\Engine.cpp" />
     <ClCompile Include="scr\graphics\Buffer.cpp" />
-    <ClCompile Include="scr\graphics\Camera.cpp" />
     <ClCompile Include="scr\graphics\Descriptors.cpp" />
     <ClCompile Include="scr\graphics\GraphicsEngine.cpp" />
-    <ClCompile Include="scr\graphics\KeyboardInputController.cpp" />
     <ClCompile Include="scr\Main.cpp" />
-    <ClCompile Include="scr\graphics\PointLightSystem.cpp" />
-    <ClCompile Include="scr\graphics\SimpleRenderSystem.cpp" />
     <ClCompile Include="scr\graphics\Device.cpp" />
-    <ClCompile Include="scr\graphics\GameObject.cpp" />
     <ClCompile Include="scr\graphics\Model.cpp" />
     <ClCompile Include="scr\graphics\Pipeline.cpp" />
     <ClCompile Include="scr\graphics\Renderer.cpp" />
@@ -187,7 +181,6 @@
     <ClCompile Include="scr\systems\PointLightRenderSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="scr\App.h" />
     <ClInclude Include="scr\components\Camera.h" />
     <ClInclude Include="scr\core\ComponentArray.h" />
     <ClInclude Include="scr\core\Componentmanager.h" />
@@ -198,18 +191,12 @@
     <ClInclude Include="scr\core\SystemManager.h" />
     <ClInclude Include="scr\Engine.h" />
     <ClInclude Include="scr\graphics\Buffer.h" />
-    <ClInclude Include="scr\graphics\Camera.h" />
-    <ClInclude Include="scr\graphics\Components.h" />
     <ClInclude Include="scr\components\Light.h" />
     <ClInclude Include="scr\components\Model.h" />
     <ClInclude Include="scr\graphics\Descriptors.h" />
     <ClInclude Include="scr\graphics\FrameInfo.h" />
     <ClInclude Include="scr\graphics\GraphicsEngine.h" />
-    <ClInclude Include="scr\graphics\KeyboardInputController.h" />
-    <ClInclude Include="scr\graphics\PointLightSystem.h" />
-    <ClInclude Include="scr\graphics\SimpleRenderSystem.h" />
     <ClInclude Include="scr\graphics\Device.h" />
-    <ClInclude Include="scr\graphics\GameObject.h" />
     <ClInclude Include="scr\graphics\Model.h" />
     <ClInclude Include="scr\graphics\Pipeline.h" />
     <ClInclude Include="scr\graphics\Renderer.h" />
@@ -217,6 +204,8 @@
     <ClInclude Include="scr\systems\CameraControllerSystem.h" />
     <ClInclude Include="scr\systems\ModelRendererSystem.h" />
     <ClInclude Include="scr\systems\PointLightRenderSystem.h" />
+    <ClInclude Include="scr\utilities\Input.h" />
+    <ClInclude Include="scr\utilities\Timer.h" />
     <ClInclude Include="scr\utilities\Utils.h" />
     <ClInclude Include="scr\graphics\Window.h" />
     <ClInclude Include="scr\components\Transform.h" />

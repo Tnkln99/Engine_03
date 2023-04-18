@@ -6,6 +6,8 @@
 #include "../components/Model.h"
 #include "../components/Light.h"
 
+#include "../utilities/Input.h"
+
 
 namespace zt::graphics
 {
@@ -82,70 +84,23 @@ namespace zt::graphics
         }
         cameraControllerSystem->init();
 
-        std::shared_ptr model = Model::createModelFromFile(device, "models/flat_vase.obj");
-
-        core::Entity vase = coordinator.createEntity();
-        coordinator.addComponent<component::Transform>(
-            vase,
-            { { -.5f, .5f, 0.0f }, { 3.f, 1.5f, 3.f } }
-        );
-        coordinator.addComponent<component::Model>(
-            vase,
-            { model }
-        );
-
-        core::Entity vase2 = coordinator.createEntity();
-        coordinator.addComponent<component::Transform>(
-            vase2,
-            { { .5f, .5f, 0.0f }, { 3.f, 1.5f, 3.f } }
-        );
-        coordinator.addComponent<component::Model>(
-            vase2,
-            { model }
-        );
-
-        camera = coordinator.createEntity();
-        component::Transform cameraTransform{};
-        cameraTransform.translation.z = -2.5f;
-        coordinator.addComponent(
-            camera,
-            cameraTransform
-        );
-        component::Camera cameraComp{};
-        coordinator.addComponent(
-            camera,
-            cameraComp
-        );
-
-        core::Entity light = coordinator.createEntity();
-        component::Light compLight{};
-        compLight.color = glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f };
-        component::Transform lightTransform{};
-
-        coordinator.addComponent(
-            light,
-            compLight
-        );
-        coordinator.addComponent(
-            light,
-            lightTransform
-        );
+        utilities::Input::init(window.getGLFWwindow());
 	}
 
-    void GraphicsEngine::render(core::Coordinator& coordinator)
+    void GraphicsEngine::render(core::Coordinator& coordinator, float dt)
     {
         glfwPollEvents();
 
-        float aspect = renderer.getAspectRatio ();
+        const float aspect = renderer.getAspectRatio ();
 
-        if (auto commandBuffer = renderer.beginFrame())
+        if (const auto commandBuffer = renderer.beginFrame())
         {
             const int frameIndex = renderer.getFrameIndex();
 
             renderer.beginSwapChainRenderPass(commandBuffer);
 
             GlobalUbo ubo{};
-            RenderUpdateInfo renderUpdateInfo
+            const FrameInfo frameInfo
             {
                 frameIndex,
                 aspect,
@@ -154,9 +109,9 @@ namespace zt::graphics
                 ubo
             };
 
-            cameraControllerSystem->update(coordinator, window.getGLFWwindow(), aspect, 0.01f);
-            modelSystem->update(coordinator, renderUpdateInfo, camera);
-            pointLightSystem->update(coordinator, renderUpdateInfo);
+            cameraControllerSystem->update(coordinator, aspect, dt);
+            modelSystem->update(coordinator, frameInfo, camera);
+            pointLightSystem->update(coordinator, frameInfo);
 
             uboBuffers[frameIndex]->writeToBuffer(&ubo);
             uboBuffers[frameIndex]->flush();
@@ -178,5 +133,10 @@ namespace zt::graphics
     bool GraphicsEngine::shouldCloseWindow()
     {
         return window.shouldClose();
+    }
+
+    std::shared_ptr<Model> GraphicsEngine::loadModel(const std::string& filePath)
+    {
+        return Model::createModelFromFile(device, filePath);
     }
 }

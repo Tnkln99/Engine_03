@@ -24,18 +24,18 @@ namespace zt::system
 	}
 
 	void ModelRendererSystem::update(core::Coordinator& coordinator, 
-		const graphics::RenderUpdateInfo& renderUpdateInfo, 
+		const graphics::FrameInfo& frameInfo, 
 		const core::Entity& cameraEntity) const
 	{
-		pipeline->bind(renderUpdateInfo.commandBuffer);
+		pipeline->bind(frameInfo.commandBuffer);
 
 		vkCmdBindDescriptorSets(
-			renderUpdateInfo.commandBuffer,
+			frameInfo.commandBuffer,
 			VK_PIPELINE_BIND_POINT_GRAPHICS,
 			pipelineLayout,
 			0,
 			1,
-			&renderUpdateInfo.globalDescriptorSet,
+			&frameInfo.globalDescriptorSet,
 			0,
 			nullptr
 		);
@@ -52,18 +52,18 @@ namespace zt::system
 			push.normalMatrix = transform.normalMatrix();
 
 			vkCmdPushConstants(
-				renderUpdateInfo.commandBuffer,
+				frameInfo.commandBuffer,
 				pipelineLayout,
 				VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT,
 				0,
 				sizeof(SimplePushConstantData),
 				&push);
-			model.model->bind(renderUpdateInfo.commandBuffer);
-			model.model->draw(renderUpdateInfo.commandBuffer);
+			model.model->bind(frameInfo.commandBuffer);
+			model.model->draw(frameInfo.commandBuffer);
 		}
 
-		renderUpdateInfo.ubo.projectionMatrix = camera.projection;
-		renderUpdateInfo.ubo.viewMatrix = camera.view;
+		frameInfo.ubo.projectionMatrix = camera.projection;
+		frameInfo.ubo.viewMatrix = camera.view;
 	}
 
 	void ModelRendererSystem::clean(graphics::Device& device)

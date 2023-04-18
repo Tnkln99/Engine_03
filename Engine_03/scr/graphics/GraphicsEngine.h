@@ -2,6 +2,7 @@
 #include "Descriptors.h"
 #include "Renderer.h"
 #include "Buffer.h"
+#include "Model.h"
 
 #include "../core/Coordinator.h"
 
@@ -25,10 +26,14 @@ namespace zt::graphics
 		GraphicsEngine& operator=(const GraphicsEngine&) = delete;
 
 		void init(core::Coordinator& coordinator);
-		void render(core::Coordinator& coordinator);
+		void render(core::Coordinator& coordinator, float dt);
 		void postRender();
 
 		bool shouldCloseWindow();
+
+		std::shared_ptr<Model> loadModel(const std::string& filePath);
+
+		core::Entity camera{};
 	private:
 		Window window{ WIDTH, HEIGHT, "Engine_03" };
 		Device device{ window };
@@ -41,6 +46,5 @@ namespace zt::graphics
 		std::shared_ptr<system::ModelRendererSystem> modelSystem;
 		std::shared_ptr<system::PointLightRenderSystem> pointLightSystem;
 		std::shared_ptr<system::CameraControllerSystem> cameraControllerSystem;
-		core::Entity camera{};
 	};
 }

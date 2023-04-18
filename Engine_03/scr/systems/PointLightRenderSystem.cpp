@@ -13,7 +13,7 @@ namespace zt::system
 	}
 
 	void PointLightRenderSystem::update(core::Coordinator& coordinator,
-		const graphics::RenderUpdateInfo& renderUpdateInfo) const
+		const graphics::FrameInfo& renderUpdateInfo) const
 	{
 		pipeline->bind(renderUpdateInfo.commandBuffer);
 

@@ -1,7 +1,12 @@
 #include "Engine.h"
-#include "core/Coordinator.h"
 
-#include <iostream>
+#include "components/Camera.h"
+#include "core/Coordinator.h"
+#include "utilities/Timer.h"
+
+#include "components/Transform.h"
+#include "components/Model.h"
+#include "components/Light.h"
 
 namespace zt
 {
@@ -9,16 +14,19 @@ namespace zt
 
 	Engine::~Engine() = default;
 
-	void Engine::run()
-	{		
-		core::Coordinator coordinator;
-		coordinator.init();
+	void Engine::init(core::Coordinator& coordinator)
+	{
+        coordinator.init();
+        graphicEngine.init(coordinator);
+        utilities::Timer::init();
+	}
 
-		graphicEngine.init(coordinator);
-		
-		while(!graphicEngine.shouldCloseWindow())
+	void Engine::run(core::Coordinator& coordinator)
+	{		
+        while(!graphicEngine.shouldCloseWindow())
 		{
-			graphicEngine.render(coordinator);
+			const float dt = utilities::Timer::getDeltaTime();
+			graphicEngine.render(coordinator, dt);
 		}
 
 		graphicEngine.postRender();

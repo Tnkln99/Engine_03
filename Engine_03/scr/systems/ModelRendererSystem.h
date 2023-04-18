@@ -11,7 +11,7 @@ namespace zt::system
 	public:
 		void init(graphics::Device& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
 
-		void update(core::Coordinator& coordinator, const graphics::RenderUpdateInfo& renderUpdateInfo, const core::Entity& camera) const;
+		void update(core::Coordinator& coordinator, const graphics::FrameInfo& frameInfo, const core::Entity& camera) const;
 
 		void clean(graphics::Device& device);
 	private:
