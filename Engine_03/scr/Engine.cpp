@@ -15,14 +15,19 @@ namespace zt
         utilities::Timer::init();
 	}
 
-	void Engine::run(core::Coordinator& coordinator)
+	void Engine::update(core::Coordinator& coordinator)
 	{		
-        while(!graphicEngine.shouldCloseWindow())
-		{
-			const float dt = utilities::Timer::getDeltaTime();
-			graphicEngine.render(coordinator, dt);
-		}
+		const float dt = utilities::Timer::getDeltaTime();
+		graphicEngine.render(coordinator, dt);
+	}
 
+	bool Engine::shouldCloseWindow()
+	{
+		return graphicEngine.shouldCloseWindow();
+	}
+
+	void Engine::terminate()
+	{
 		graphicEngine.postRender();
 	}
 }

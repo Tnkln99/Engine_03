@@ -30,6 +30,7 @@ namespace zt::graphics
 		void postRender();
 
 		bool shouldCloseWindow();
+		float getAspectRatio() const;
 
 		std::shared_ptr<Model> loadModel(const std::string& filePath);
 
@@ -45,6 +46,5 @@ namespace zt::graphics
 
 		std::shared_ptr<system::ModelRendererSystem> modelSystem;
 		std::shared_ptr<system::PointLightRenderSystem> pointLightSystem;
-		std::shared_ptr<system::CameraControllerSystem> cameraControllerSystem;
 	};
 }

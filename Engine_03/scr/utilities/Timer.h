@@ -27,11 +27,8 @@ namespace zt::utilities
         }
 
     private:
-        static std::chrono::time_point<std::chrono::high_resolution_clock> startTime;
-        static float lastFrameTime;
+        inline static std::chrono::time_point<std::chrono::high_resolution_clock> startTime{};
+        inline static float lastFrameTime = 0.0f;
 	};
-
-    std::chrono::time_point<std::chrono::high_resolution_clock> Timer::startTime;
-    float Timer::lastFrameTime = 0.0f;
 }
 

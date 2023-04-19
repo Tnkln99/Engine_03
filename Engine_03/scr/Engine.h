@@ -11,7 +11,11 @@ namespace zt
 
 		void init(core::Coordinator& coordinator);
 
-		void run(core::Coordinator& coordinator);
+		void update(core::Coordinator& coordinator);
+
+		bool shouldCloseWindow();
+
+		void terminate();
 
 		graphics::GraphicsEngine graphicEngine{};
 	};

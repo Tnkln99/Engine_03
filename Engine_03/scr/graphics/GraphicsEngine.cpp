@@ -75,23 +75,14 @@ namespace zt::graphics
             renderer.getSwapChainRenderPass(),
             globalSetLayout->getDescriptorSetLayout());
 
-        cameraControllerSystem = coordinator.registerSystem<system::CameraControllerSystem>();
-        {
-            core::Signature signature;
-            signature.set(coordinator.getComponentType<component::Camera>());
-            signature.set(coordinator.getComponentType<component::Transform>());
-            coordinator.setSystemSignature<system::CameraControllerSystem>(signature);
-        }
-        cameraControllerSystem->init();
-
-        utilities::Input::init(window.getGLFWwindow());
+		utilities::Input::init(window.getGLFWwindow());
 	}
 
     void GraphicsEngine::render(core::Coordinator& coordinator, float dt)
     {
         glfwPollEvents();
 
-        const float aspect = renderer.getAspectRatio ();
+        const float aspect = renderer.getAspectRatio();
 
         if (const auto commandBuffer = renderer.beginFrame())
         {
@@ -109,8 +100,7 @@ namespace zt::graphics
                 ubo
             };
 
-            cameraControllerSystem->update(coordinator, aspect, dt);
-            modelSystem->update(coordinator, frameInfo, camera);
+        	modelSystem->update(coordinator, frameInfo, camera);
             pointLightSystem->update(coordinator, frameInfo);
 
             uboBuffers[frameIndex]->writeToBuffer(&ubo);
@@ -133,6 +123,11 @@ namespace zt::graphics
     bool GraphicsEngine::shouldCloseWindow()
     {
         return window.shouldClose();
+    }
+
+    float GraphicsEngine::getAspectRatio() const
+    {
+        return renderer.getAspectRatio();
     }
 
     std::shared_ptr<Model> GraphicsEngine::loadModel(const std::string& filePath)
